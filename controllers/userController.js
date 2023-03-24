@@ -3,9 +3,9 @@ var nodemailer = require("nodemailer");
 const otpGenerator = require("otp-generator");
 const User = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const saltRounds = 10;
-const JWT_SECRET_KEY ="eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY3OTU0NjQ1MiwiaWF0IjoxNjc5NTQ2NDUyfQ.Rwf-BnnWQsGu2CoVxeRPu1PjFdf-yRUoYlTwIKWZDgE";
 const regex = new RegExp(
   "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
 );
@@ -28,7 +28,7 @@ const signup = async (req, res) => {
       });
       res.status(200).send(user);
     } else {
-      res
+      return res
         .status(200)
         .send(
           "Password Must Be Eight Characters Including One Uppercase Letter, One Lowercase Letter, One Special Character And Alphanumeric Characters."
@@ -56,8 +56,8 @@ const login = async (req, res) => {
         email: data.dataValues.email,
         username: data.dataValues.username,
       };
-      const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "30m" });
-      res.status(200).send({
+      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "30m" });
+     return res.status(200).send({
         success: true,
         token: token,
         user: payload,
@@ -91,12 +91,12 @@ const getOtp = async (req, res) => {
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "abhishek@real11.com",
-          pass: "fedvuempqdhqokhs",
+          user: process.env.email,
+          pass: process.env.password,
         },
       });
       let mailOptions = {
-        from: "abhishek@real11.com",
+        from: process.env.email,
         to: email,
         subject: "Password Reset OTP",
         text: otp,
@@ -107,7 +107,7 @@ const getOtp = async (req, res) => {
         } else {
           return res.status(200).send({
             success: true,
-            data: "",
+            data: info,
             message: "Otp send successfully",
           });
         }
