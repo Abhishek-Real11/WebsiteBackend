@@ -8,11 +8,7 @@ const routes=require('./routes/index')
 app.use('/uploads', express.static('uploads'));
 const path = require('path');
 const connectDB =require("./config/connectDB.js");
-const connection=require("./database")
-connection.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
+
  connectDB();
 
 app.use(bodyParser.json())
