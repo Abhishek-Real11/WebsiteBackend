@@ -67,7 +67,7 @@ const upload = multer({
       cb(null, file.originalname);
     },
     contentType: function (req, file, cb) {
-      cb(null, "image/jpeg");
+      cb(null, file.mimetype);
     },
   }),
 });
