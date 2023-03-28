@@ -3,9 +3,6 @@ require("dotenv").config();
 const addIndainT20League=async(req,res)=>{
 try {
     const record=JSON.parse(req.body.data);
-    // console.log(data)
-    console.log(req.file)
-    console.log(record)
     let data=await IndianT20League.create({
       captain:record.captain,
       team:record.team,

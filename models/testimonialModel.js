@@ -2,8 +2,7 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Testimonial extends Model {
-}
+class Testimonial extends Model {}
 
 Testimonial.init(
   {
@@ -17,16 +16,19 @@ Testimonial.init(
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: "inactivate",
+      defaultValue: "activate",
     },
-    quote:{
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
+    quote: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.STRING,
+    },
   },
   {
-    sequelize, 
-    modelName: "Testimonial", 
+    sequelize,
+    modelName: "Testimonial",
     createdAt: false,
     updatedAt: false,
   }
