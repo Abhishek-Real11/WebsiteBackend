@@ -17,7 +17,7 @@ const {
 router.post("/addbanner",[upload1.single('image')], uploadfile);
 router.get('/getbanner',getFile);
 router.post('/updateStatus',updateStatus);
-router.delete('/deleteImage',deleteFile)
+router.post('/deleteImage',deleteFile)
 
 
 module.exports = router;

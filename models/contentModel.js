@@ -2,35 +2,36 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Faqs extends Model {}
+class Content extends Model {}
 
-Faqs.init(
+Content.init(
   {
-    ques: {
+    title: {
+      type: DataTypes.TEXT,
+    },
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    answer: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "inactivate",
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     type: {
       type: DataTypes.STRING,
-    },
-    subType: {
-      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {
     sequelize, // We need to pass the connection instance
-    modelName: "faqs", // We need to choose the model name,
+    modelName: "Content", // We need to choose the model name,
     createdAt: false,
     updatedAt: false,
   }
 );
 
-module.exports = Faqs;
+module.exports = Content;

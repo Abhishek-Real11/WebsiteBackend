@@ -21,6 +21,12 @@ Image.init(
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      isDeleted:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },subType: {
+        type: DataTypes.STRING,
       }
   },
   {

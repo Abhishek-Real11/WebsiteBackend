@@ -3,11 +3,13 @@ require("dotenv").config();
 const uploadfile = async (req, res) => {
   try {
     const file = req.file;
-
-    // const src=req.body.image
-    console.log(req.file);
-    // const { type, status, isActive } = req.query;
     const type = req.query.type;
+    if (!req.file)
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Please Select Image ",
+      });
 
     if (!type)
       return res.status(400).send({ message: "Please send Type of Image." });
@@ -42,14 +44,25 @@ const uploadfile = async (req, res) => {
 
 const getFile = async (req, res) => {
   try {
-    let data = await image.findAll({ where: { status: "activate" } });
+    const type=req.query.type||"all"
+    // if(type==="all"){
+    //   let data = await image.findAll({ where: { isActive:"1" } });
+    // }else{
+    //   let data = await image.findAll({ where: { isActive:"1",type:type } });
+    // }
+    if (type !== "all") {
+      data = await image.findAll({ where: { isActive:"1", type: type } });
+    } else {
+      data = await image.findAll({ where: {isActive:"1" } });
+    }
+    // let data = await image.findAll({ where: { isActive:"1",type:type } });
     if (data)
       return res.status(200).send({
         success: true,
         data: data,
         message: "Get Succesfully",
       });
-  } catch {
+  } catch(error) {
     return res.status(400).send({
       success: false,
       data: "",
@@ -81,14 +94,20 @@ const updateStatus = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    let data = await image.destroy({ where: { id: req.query.id } });
+    let data = await image.update({isDeleted:true},{ where: { id: req.query.id } });
 
     return res.status(200).send({
       success: true,
       data: data,
-      message: "Deldted Succesfully",
+      message: "Deleted Succesfully",
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Deletion Failed",
+    });
+  }
 };
 
 module.exports = {

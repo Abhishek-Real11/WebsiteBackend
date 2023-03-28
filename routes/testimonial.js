@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   addTestimonial,
-  getaddTestimonial,
+  getTestimonial,
 } = require("../controllers/testimonialController");
 const verify = require("../midllewares/verify");
 
@@ -13,6 +13,6 @@ const upload1 = require("../config/multer");
 //     next();
 // })
 router.post("/addTestimonial", [upload1.single("image")], addTestimonial);
-router.get("/getTestimonial", getaddTestimonial);
+router.get("/getTestimonial", getTestimonial);
 
 module.exports = router;
