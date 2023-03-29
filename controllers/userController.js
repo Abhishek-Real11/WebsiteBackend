@@ -4,6 +4,7 @@ const otpGenerator = require("otp-generator");
 const User = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+JWT_SECRET_KEY ="eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY3OTU0NjQ1MiwiaWF0IjoxNjc5NTQ2NDUyfQ.Rwf-BnnWQsGu2CoVxeRPu1PjFdf-yRUoYlTwIKWZDgE";
 
 const saltRounds = 10;
 const regex = new RegExp(
@@ -41,6 +42,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log("111")
     if (!req.body.email || !req.body.password) {
       return res.status(400).send("Insufficient Data");
     }
@@ -55,8 +57,9 @@ const login = async (req, res) => {
       const payload = {
         email: data.dataValues.email,
         username: data.dataValues.username,
+        roles:data.dataValues.roles
       };
-      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "30m" });
+      const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "30m" });
      return res.status(200).send({
         success: true,
         token: token,

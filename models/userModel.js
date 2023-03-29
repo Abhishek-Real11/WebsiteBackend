@@ -20,6 +20,10 @@ User.init(
     otp: {
       type: DataTypes.STRING,
     },
+    roles:{
+      type:DataTypes.STRING,
+      defaultValue: "user"
+    }
   },
   {
     sequelize, // We need to pass the connection instance

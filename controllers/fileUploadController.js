@@ -44,16 +44,13 @@ const uploadfile = async (req, res) => {
 
 const getFile = async (req, res) => {
   try {
+    console.log
     const type=req.query.type||"all"
-    // if(type==="all"){
-    //   let data = await image.findAll({ where: { isActive:"1" } });
-    // }else{
-    //   let data = await image.findAll({ where: { isActive:"1",type:type } });
-    // }
+  
     if (type !== "all") {
       data = await image.findAll({ where: { isActive:"1", type: type } });
     } else {
-      data = await image.findAll({ where: {isActive:"1" } });
+      data = await image.findAll({ });
     }
     // let data = await image.findAll({ where: { isActive:"1",type:type } });
     if (data)
@@ -72,17 +69,30 @@ const getFile = async (req, res) => {
 };
 const updateStatus = async (req, res) => {
   try {
-    let value = req.body.status;
-
-    let data = await image.update(
-      { status: value },
-      { where: { id: req.body.id } }
-    );
-    return res.status(200).send({
-      success: true,
-      data: data,
-      message: "Update Succesfully",
-    });
+    let id = req.query.id;
+    let isActive=req.query.isActive
+   
+    let result=await image.findAll({where:{id:id}})
+   
+    if(isActive!=result[0].dataValues.isActive){
+      let data = await image.update(
+        { isActive: isActive },
+        { where: { id: id } }
+      );
+    
+      return res.status(200).send({
+        success: true,
+        data: isActive,
+        message: "Status Update Succesfully",
+      });
+    }else{
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Please Change Status",
+      });
+    }
+    
   } catch (error) {
     return res.status(400).send({
       success: false,

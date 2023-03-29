@@ -24,6 +24,10 @@ Faqs.init(
     subType: {
       type: DataTypes.STRING,
     },
+    isActive:{
+      type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
   },
   {
     sequelize, // We need to pass the connection instance

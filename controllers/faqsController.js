@@ -32,9 +32,9 @@ const getfaqs = async (req, res) => {
     let type = req.query.type || "all";
 
     if (type !== "all") {
-      data = await Faqs.findAll({ where: { status: "activate", type: type } });
+      data = await Faqs.findAll({ where: { isActive:"1", type: type } });
     } else {
-      data = await Faqs.findAll({ where: { status: "activate" } });
+      data = await Faqs.findAll({ where: {  } });
     }
 
     return res.status(200).send(data);
@@ -46,8 +46,48 @@ const getfaqs = async (req, res) => {
     });
   }
 };
+const updateStatus = async (req, res) => {
+  try {
+    let id = req.query.id;
+    let isActive = req.query.isActive;
+
+    let result = await Faqs.findAll({ where: { id: id } });
+   
+
+    if (isActive != result[0].dataValues.isActive) {
+      
+      let data = await Faqs.update(
+        { isActive: isActive },
+        { where: { id: id } }
+      );
+      return res.status(200).send({
+        success: true,
+        data: isActive,
+        message: "Status Updated Succesfully",
+      });
+
+    } else {
+      
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Please Change Status",
+      
+      });
+    }
+  } catch (error) {
+
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: error,
+    });
+    
+  }
+};
 
 module.exports = {
   addfaqs,
   getfaqs,
+  updateStatus,
 };
