@@ -28,7 +28,6 @@ const getContent = async (req, res) => {
   try {
     data = await Content.findAll({});
 
-    // let data = await image.findAll({ where: { isActive:"1",  type:type } });
     if (data)
       return res.status(200).send({
         success: true,

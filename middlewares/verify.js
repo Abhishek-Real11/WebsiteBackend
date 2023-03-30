@@ -10,9 +10,8 @@ module.exports = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ error: "you must be logged in" });
     }
-    //    console.log(jwt.verify(token,JWT_SECRET_KEY))
+
     jwt.verify(token, JWT_SECRET_KEY, async (err, payload) => {
-      // console.log(payload)
       if (err) {
         return res.status(200).send({
           success: false,
@@ -22,7 +21,7 @@ module.exports = async (req, res, next) => {
       }
 
       const { email, username } = payload;
-      // console.log(id)
+
       const result = await User.findOne({ where: { email: email } });
       if (!result) {
         return res.status(400).send("Invalid Token");

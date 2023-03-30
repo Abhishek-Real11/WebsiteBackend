@@ -38,8 +38,8 @@ IndianT20League.init(
   },
  
   {
-    sequelize, // We need to pass the connection instance
-    modelName: "IndianT20League", // We need to choose the model name,
+    sequelize, 
+    modelName: "IndianT20League", 
     createdAt: false,
     updatedAt: false,
   }

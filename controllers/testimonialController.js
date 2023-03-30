@@ -30,7 +30,7 @@ const getTestimonial = async (req, res) => {
     let data; 
     let type=req.query.type||"all";
    
-    //  data = await Testimonial.findAll({})
+   
      if (type !== "all") {
       data = await Testimonial.findAll({ where: { isActive:"1", type: type } });
     } else {

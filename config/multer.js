@@ -9,43 +9,6 @@ aws.config.update({
   region: "ap-south-1",
 });
 
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       const directory="/Users/real11fullstack/Desktop/WebsiteBackend/uploads"
-//        cb(null, directory);
-//     },
-//     filename: function (req, file, cb) {
-//        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-//     }
-//  });
-
-// const upload = multer({
-//    fileFilter,
-//    storage: multerS3({
-//      acl: "public-read",
-//      s3,
-//      bucket: process.env.AWS_S3_BUCKET,
-//      metadata: function (req, file, cb) {
-//        cb(null, { fieldName: "TESTING_METADATA" });
-//      },
-//      key: function (req, file, cb) {
-//        cb(null, Date.now().toString());
-//      },
-//    }),
-//  });
-// let s3 = new S3Client()
-//  const upload = multer({
-//    storage: multerS3({
-//      s3: s3,
-//      bucket: process.env.AWS_S3_BUCKET,
-//      metadata: function (req, file, cb) {
-//        cb(null, {fieldName: file.fieldname});
-//      },
-//      key: function (req, file, cb) {
-//        cb(null, Date.now().toString())
-//      }
-//    })
-//  })
 const { S3Client } = require("@aws-sdk/client-s3");
 const express = require("express");
 const multer = require("multer");

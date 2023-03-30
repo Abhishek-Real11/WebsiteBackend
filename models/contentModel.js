@@ -27,8 +27,8 @@ Content.init(
     },
   },
   {
-    sequelize, // We need to pass the connection instance
-    modelName: "Content", // We need to choose the model name,
+    sequelize,
+    modelName: "Content",
     createdAt: false,
     updatedAt: false,
   }

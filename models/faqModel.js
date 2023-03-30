@@ -31,8 +31,8 @@ Faqs.init(
     isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
   },
   {
-    sequelize, // We need to pass the connection instance
-    modelName: "faqs", // We need to choose the model name,
+    sequelize,
+    modelName: "faqs",
     createdAt: false,
     updatedAt: false,
   }

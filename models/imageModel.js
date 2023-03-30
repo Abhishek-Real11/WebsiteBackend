@@ -30,8 +30,8 @@ Image.init(
     },
   },
   {
-    sequelize, // We need to pass the connection instance
-    modelName: "image", // We need to choose the model name,
+    sequelize,  
+    modelName: "image",
     createdAt: false,
     updatedAt: false,
   }

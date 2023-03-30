@@ -16,9 +16,7 @@ const uploadfile = async (req, res) => {
 
     const status = req.query.status;
     const isActive = req.query.isActive;
-    // if (!file) {
-    //   return res.status(400).send({ message: "Please upload a file." });
-    // }
+
     let src = req.file.location;
     let data = await image.create({
       image: src,
