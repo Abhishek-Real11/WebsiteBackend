@@ -6,14 +6,16 @@ This is a backend api using node.js express with mysql
   
 ## Tech Stack
 - [X] express
-- [X] mysql  
+- [X] mysql
+- [X] sequlize
+
   
 ## Database
 + config/db.js
   
 ## Install
 ```bash
-git clone 
+git clone https://github.com/Abhishek-Real11/WebsiteBackend.git
 ```  
 ```bash
 npm install
