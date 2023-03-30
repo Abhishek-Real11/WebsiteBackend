@@ -5,7 +5,7 @@ const {
     getfaqs,
     updateStatus
 } = require("../adminControllers/faqsController");
- const verify=require("../midllewares/verify")
+ const verify=require("../middlewares/verify")
 
 // router.use('/',(req,rex,next)=>{
 //     console.log("Hit");

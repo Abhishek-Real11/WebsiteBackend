@@ -5,7 +5,7 @@ const {
   getTestimonial,
   updateStatus
 } = require("../adminControllers/testimonialController");
-const verify = require("../midllewares/verify");
+const verify = require("../middlewares/verify");
 
 const upload1 = require("../config/multer");
 

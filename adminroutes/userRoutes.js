@@ -6,7 +6,7 @@ const {
   getOtp,
   resetPassword,
 } = require("../adminControllers/userController");
-// const verify=require("../middlewares/verify")
+
 
 router.post("/signup", signup);
 router.post("/login", login);

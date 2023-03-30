@@ -4,7 +4,7 @@ const {
     addIndainT20League,
     getIndainT20League
 } = require("../adminControllers/indain-T20-LeagueController");
- const verify=require("../midllewares/verify")
+ const verify=require("../middlewares/verify")
 
  const upload1=require("../config/multer")
 

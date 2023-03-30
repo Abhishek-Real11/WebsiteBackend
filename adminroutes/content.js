@@ -5,7 +5,7 @@ const {
     getContent,
     updateStatus
 } = require("../adminControllers/contentController");
- const verify=require("../midllewares/verify")
+ const verify=require("../middlewares/verify")
 
 
 router.post("/createContent", create);
