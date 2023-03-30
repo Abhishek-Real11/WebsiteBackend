@@ -2,8 +2,7 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Image extends Model {
-}
+class Image extends Model {}
 
 Image.init(
   {
@@ -19,15 +18,16 @@ Image.init(
       defaultValue: "inactivate",
     },
     isActive: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      isDeleted:{
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },subType: {
-        type: DataTypes.STRING,
-      }
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    subType: {
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize, // We need to pass the connection instance

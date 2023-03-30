@@ -26,16 +26,9 @@ const create = async (req, res) => {
 
 const getContent = async (req, res) => {
   try {
-   
-    let type = req.query.type || "all";
+    data = await Content.findAll({});
 
-    if (type !== "all") {
-      data = await Content.findAll({ where: { isActive:"1", type: type } });
-    } else {
-      data = await Content.findAll({ where:{isActive:"1"}});
-    }
-
-
+    // let data = await image.findAll({ where: { isActive:"1",  type:type } });
     if (data)
       return res.status(200).send({
         success: true,

@@ -1,16 +1,15 @@
 const Testimonial = require("../models/testimonialModel");
 const addTestimonial = async (req, res) => {
   try {
-    
     const { amount, quote, type } = JSON.parse(req.body.data);
-   
+
     let data = await Testimonial.create({
       image: req.file.location,
       amount: amount,
       quote: quote,
       type: type,
     });
-  
+
     return res.status(200).send({
       success: true,
       data: data,
@@ -27,19 +26,12 @@ const addTestimonial = async (req, res) => {
 
 const getTestimonial = async (req, res) => {
   try {
-    let data; 
-    let type=req.query.type||"all";
-   
-    //  data = await Testimonial.findAll({})
-     if (type !== "all") {
-      data = await Testimonial.findAll({ where: { isActive:"1", type: type } });
-    } else {
-      data = await Testimonial.findAll({where:{isActive:"1"}});
-    }
-     return res.status(200).send({
+    let data;
+    data = await Testimonial.findAll({});
+    return res.status(200).send({
       success: false,
       data: data,
-      message: 'Get SuccessFully',
+      message: "Get SuccessFully",
     });
   } catch (error) {
     return res.status(400).send({
@@ -53,29 +45,28 @@ const getTestimonial = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     let id = req.query.id;
-    let isActive=req.query.isActive
+    let isActive = req.query.isActive;
 
-    let result=await Testimonial.findAll({where:{id:id}})
-    
-    if(isActive!=result[0].dataValues.isActive){
+    let result = await Testimonial.findAll({ where: { id: id } });
+
+    if (isActive != result[0].dataValues.isActive) {
       let data = await Testimonial.update(
         { isActive: isActive },
         { where: { id: id } }
       );
-  
+
       return res.status(200).send({
         success: true,
         data: isActive,
         message: "Status Update Succesfully",
       });
-    }else{
+    } else {
       return res.status(400).send({
         success: false,
         data: "",
         message: "Please Change Status",
       });
     }
-    
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -85,9 +76,8 @@ const updateStatus = async (req, res) => {
   }
 };
 
-
 module.exports = {
   addTestimonial,
   getTestimonial,
-  updateStatus
+  updateStatus,
 };

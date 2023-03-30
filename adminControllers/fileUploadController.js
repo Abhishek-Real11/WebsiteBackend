@@ -44,14 +44,7 @@ const uploadfile = async (req, res) => {
 
 const getFile = async (req, res) => {
   try {
-    console.log;
-    const type = req.query.type || "all";
-
-    if (type !== "all") {
-      data = await image.findAll({ where: { isActive: "1", type: type } });
-    } else {
-      data = await image.findAll({ where: { isActive: "1" } });
-    }
+    let data = await image.findAll({});
 
     if (data)
       return res.status(200).send({

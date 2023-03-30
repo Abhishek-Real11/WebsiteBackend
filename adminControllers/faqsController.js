@@ -29,13 +29,8 @@ const addfaqs = async (req, res) => {
 const getfaqs = async (req, res) => {
   try {
     let data;
-    let type = req.query.type || "all";
 
-    if (type !== "all") {
-      data = await Faqs.findAll({ where: { isActive:"1", type: type } });
-    } else {
-      data = await Faqs.findAll({ where:{isActive:"1"}});
-    }
+    data = await Faqs.findAll({});
 
     return res.status(200).send(data);
   } catch (error) {
@@ -52,10 +47,8 @@ const updateStatus = async (req, res) => {
     let isActive = req.query.isActive;
 
     let result = await Faqs.findAll({ where: { id: id } });
-   
 
     if (isActive != result[0].dataValues.isActive) {
-      
       let data = await Faqs.update(
         { isActive: isActive },
         { where: { id: id } }
@@ -65,24 +58,19 @@ const updateStatus = async (req, res) => {
         data: isActive,
         message: "Status Updated Succesfully",
       });
-
     } else {
-      
       return res.status(400).send({
         success: false,
         data: "",
         message: "Please Change Status",
-      
       });
     }
   } catch (error) {
-
     return res.status(400).send({
       success: false,
       data: "",
       message: error,
     });
-    
   }
 };
 
