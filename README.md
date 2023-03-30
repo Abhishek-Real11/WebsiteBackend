@@ -1,19 +1,21 @@
 # Node.js-Express-With-MYSQL
-This is a demo for node.js express (jade) with mysql  
+This is a backend api using node.js express with mysql
 
 ## Blog
 [Node.js - Express + MYSQL] 
   
 ## Tech Stack
 - [X] express
-- [X] mysql  
+- [X] mysql
+- [X] sequlize
+
   
 ## Database
 + config/db.js
   
 ## Install
 ```bash
-git clone https://github.com/explooosion/Node.js-Express-With-MSSQL.git
+git clone https://github.com/Abhishek-Real11/WebsiteBackend.git
 ```  
 ```bash
 npm install
