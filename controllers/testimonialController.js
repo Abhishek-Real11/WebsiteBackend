@@ -37,7 +37,7 @@ const getTestimonial = async (req, res) => {
       data = await Testimonial.findAll({where:{isActive:"1"}});
     }
      return res.status(200).send({
-      success: false,
+      success: true,
       data: data,
       message: 'Get SuccessFully',
     });

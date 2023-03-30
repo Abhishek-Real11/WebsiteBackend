@@ -31,8 +31,11 @@ const getfaqs = async (req, res) => {
     let data;
 
     data = await Faqs.findAll({});
-
-    return res.status(200).send(data);
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "ALL Faqs Sent Successfully",
+    });
   } catch (error) {
     return res.status(400).send({
       success: false,

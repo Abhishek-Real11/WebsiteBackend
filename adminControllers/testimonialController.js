@@ -29,7 +29,7 @@ const getTestimonial = async (req, res) => {
     let data;
     data = await Testimonial.findAll({});
     return res.status(200).send({
-      success: false,
+      success: true,
       data: data,
       message: "Get SuccessFully",
     });
