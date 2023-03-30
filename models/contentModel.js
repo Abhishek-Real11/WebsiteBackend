@@ -24,12 +24,17 @@ Content.init(
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
+    },slug:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique:true
+    }
   },
   {
     sequelize,
     modelName: "Content",
-    createdAt: false,
+    timestamps: true,
+    createdAt: true, // don't add createdAt attribute
     updatedAt: false,
   }
 );

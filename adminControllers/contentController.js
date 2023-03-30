@@ -1,15 +1,25 @@
 const Content = require("../models/contentModel");
+const slugify = require("slugify");
 
 const create = async (req, res) => {
   try {
-    const { value, type } = req.body;
+    const { title, value, type } = req.body;
     if (!value)
       return res.status(200).send({
         success: true,
         data: "",
         message: "Please Add Some Content",
       });
-    const data = await Content.create({ description: value, type: type });
+
+    const slug = slugify(title, { lower: true, strict: true });
+
+    const data = await Content.create({
+      title: title,
+      description: value,
+      type: type,
+      slug: slug,
+    });
+
     return res.status(200).send({
       success: true,
       data: data,
@@ -26,6 +36,7 @@ const create = async (req, res) => {
 
 const getContent = async (req, res) => {
   try {
+    console.log("1");
     data = await Content.findAll({});
 
     if (data)
@@ -34,7 +45,13 @@ const getContent = async (req, res) => {
         data: data,
         message: "Get Succesfully",
       });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: error,
+    });
+  }
 };
 
 const updateStatus = async (req, res) => {

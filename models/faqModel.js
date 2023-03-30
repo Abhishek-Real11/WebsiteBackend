@@ -33,7 +33,8 @@ Faqs.init(
   {
     sequelize,
     modelName: "faqs",
-    createdAt: false,
+    timestamps: true,
+    createdAt: true, // don't add createdAt attribute
     updatedAt: false,
   }
 );
