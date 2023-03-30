@@ -1,39 +1,23 @@
-const express=require("express");
-const app=express()
-const PORT=process.env.PORT||5000; 
-const cors=require("cors");
-const bodyParser = require('body-parser')
-const routes=require('./routes/index')
-const adminRoutes=require('./adminroutes/index')
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 5000;
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const routes = require("./routes/index");
+const adminRoutes = require("./adminroutes/index");
 
-app.use('/uploads', express.static('uploads'));
-const path = require('path');
-const connectDB =require("./config/connectDB.js");
+app.use("/uploads", express.static("uploads"));
+const path = require("path");
+const connectDB = require("./config/connectDB.js");
 
- connectDB();
+connectDB();
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/v1',routes)
-app.use('/v1/admin',adminRoutes)
+app.use("/v1", routes);
+app.use("/v1/admin", adminRoutes);
 
- app.get('/getimage',(req,res,next)=>{
-    try {
-        console.log("1")
-        var sql='SELECT * FROM `website_real11`.`file`';
-        connection.query(sql, function (err, result) {
-            console.log(result)
-            if (err) return res.status(400).send(err);
-            res.json(result[0].file_name)
-        })
-    } catch (error) {
-        
-    }
- })
-
-
-
-app.listen(5000,(req,res)=>{
-    console.log(`Server Running on PORT : ${PORT}`)
-})
+app.listen(5000, (req, res) => {
+  console.log(`Server Running on PORT : ${PORT}`);
+});

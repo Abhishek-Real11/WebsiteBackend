@@ -42,7 +42,6 @@ const uploadfile = async (req, res) => {
 
 const getFile = async (req, res) => {
   try {
-    console.log;
     const type = req.query.type || "all";
 
     if (type !== "all") {

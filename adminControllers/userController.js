@@ -57,7 +57,7 @@ const login = async (req, res) => {
         username: data.dataValues.username,
         roles: data.dataValues.roles,
       };
-      console.log(process.env.JWT_SECRET_KEY);
+
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: "30m",
       });
