@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-JWT_SECRET_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY3OTU0NjQ1MiwiaWF0IjoxNjc5NTQ2NDUyfQ.Rwf-BnnWQsGu2CoVxeRPu1PjFdf-yRUoYlTwIKWZDgE";
+
 const User = require("../models/userModel.js");
+require("dotenv").config();
 
 module.exports = async (req, res, next) => {
   try {
@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ error: "you must be logged in" });
     }
 
-    jwt.verify(token, JWT_SECRET_KEY, async (err, payload) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
       if (err) {
         return res.status(200).send({
           success: false,
