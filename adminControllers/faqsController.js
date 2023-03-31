@@ -4,12 +4,13 @@ require("dotenv").config();
 const addfaqs = async (req, res) => {
   try {
     const data = req.body;
-
+    console.log(data)
+    const subType=req.body.subType||""
     let data1 = await Faqs.create({
       ques: data.ques,
       answer: data.answer,
       type: data.type,
-      subType: data.subType,
+      subType: subType,
     });
 
     return res.status(200).send({

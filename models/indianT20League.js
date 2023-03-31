@@ -6,6 +6,12 @@ class IndianT20League extends Model {}
 
 IndianT20League.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     captain: {
       type: DataTypes.STRING,
       allowNull: false,

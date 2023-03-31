@@ -121,9 +121,35 @@ const deleteFile = async (req, res) => {
   }
 };
 
+const getSlug = async (req, res) => {
+  try {
+    let data = await Content.findOne({ where: { slug: req.params.slug } });
+    if (data !== null) {
+      return res.status(200).send({
+        success: true,
+        data: data,
+        message: "Data Get SuccessFully",
+      });
+    } else {
+      return res.status(404).send({
+        success: false,
+        data: "",
+        message: "No Data Found",
+      });
+    }
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "error",
+    });
+  }
+};
+
 module.exports = {
   create,
   getContent,
   updateStatus,
   deleteFile,
+  getSlug,
 };

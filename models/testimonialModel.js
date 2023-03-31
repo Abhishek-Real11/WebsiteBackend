@@ -6,6 +6,12 @@ class Testimonial extends Model {}
 
 Testimonial.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     image: {
       type: DataTypes.STRING,
       allowNull: false,

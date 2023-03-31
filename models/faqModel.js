@@ -6,6 +6,12 @@ class Faqs extends Model {}
 
 Faqs.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     ques: {
       type: DataTypes.TEXT,
       allowNull: false,

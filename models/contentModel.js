@@ -6,8 +6,15 @@ class Content extends Model {}
 
 Content.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     title: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
@@ -27,8 +34,8 @@ Content.init(
     },
     slug: {
       type: DataTypes.STRING,
-      // allowNull: false,
-      // unique:true
+      allowNull: false,
+      unique:true
     },
   },
   {
