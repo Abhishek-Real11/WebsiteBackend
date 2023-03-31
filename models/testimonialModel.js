@@ -25,15 +25,14 @@ Testimonial.init(
     type: {
       type: DataTypes.STRING,
     },
-    isActive:{
-      type:DataTypes.BOOLEAN,
-      defaultValue:false
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    isDeleted:{
-      type:DataTypes.BOOLEAN,
-      defaultValue:false
-    }
-   
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     sequelize,

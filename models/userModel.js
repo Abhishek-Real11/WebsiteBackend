@@ -2,8 +2,7 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class User extends Model {
-}
+class User extends Model {}
 
 User.init(
   {
@@ -20,14 +19,14 @@ User.init(
     otp: {
       type: DataTypes.STRING,
     },
-    roles:{
-      type:DataTypes.STRING,
-      defaultValue: "user"
-    }
+    roles: {
+      type: DataTypes.STRING,
+      defaultValue: "user",
+    },
   },
   {
-    sequelize,  
-    modelName: "user", 
+    sequelize,
+    modelName: "user",
     createdAt: false,
     updatedAt: false,
   }

@@ -30,7 +30,7 @@ Image.init(
     },
   },
   {
-    sequelize,  
+    sequelize,
     modelName: "image",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute

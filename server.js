@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const routes = require("./routes/index");
 const adminRoutes = require("./adminroutes/index");
+const helmet = require("helmet");
 
 app.use("/uploads", express.static("uploads"));
 const path = require("path");
@@ -14,6 +15,7 @@ connectDB();
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(helmet());
 
 app.use("/v1", routes);
 app.use("/v1/admin", adminRoutes);

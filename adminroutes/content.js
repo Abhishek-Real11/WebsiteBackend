@@ -3,7 +3,7 @@ const router = express.Router();
 const {
     create,
     getContent,
-    updateStatus
+    updateStatus,deleteFile
 } = require("../adminControllers/contentController");
  const verify=require("../middlewares/verify")
 
@@ -11,6 +11,7 @@ const {
 router.post("/createContent", create);
 router.get('/getContent',verify,getContent);
 router.post('/updateContentStatus',updateStatus)
+router.delete('/deleteFile',deleteFile)
 
 module.exports = router;
     

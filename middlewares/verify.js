@@ -13,10 +13,10 @@ module.exports = async (req, res, next) => {
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
       if (err) {
-        return res.status(200).send({
+        return res.status(401).send({
           success: false,
           data: "",
-          message: "JWT Expired, Please Log-in Again",
+          message: "Token Expired, Please Log-in Again",
         });
       }
 

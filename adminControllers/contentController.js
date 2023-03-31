@@ -1,25 +1,39 @@
 const Content = require("../models/contentModel");
 const slugify = require("slugify");
+const response = require("../config/response");
 
 const create = async (req, res) => {
   try {
-    const { title, value, type } = req.body;
+    const { value, type } = req.body;
+    const title = req.body.title || "";
     if (!value)
       return res.status(200).send({
         success: true,
         data: "",
         message: "Please Add Some Content",
       });
+    let slug;
+    let data;
+    if (title.length > 0) {
+      slug = slugify(title, { lower: true, strict: true });
+      data = await Content.create({
+        title: title,
+        description: value,
+        type: type,
+        slug: slug,
+      });
+      return res.status(200).send({
+        success: true,
+        data: data,
+        message: "Content Added Successfully",
+      });
+    }
 
-    const slug = slugify(title, { lower: true, strict: true });
-
-    const data = await Content.create({
-      title: title,
+    data = await Content.create({
+      title: "",
       description: value,
       type: type,
-      slug: slug,
     });
-
     return res.status(200).send({
       success: true,
       data: data,
@@ -29,22 +43,16 @@ const create = async (req, res) => {
     return res.status(400).send({
       success: false,
       data: "",
-      message: "Content Added Not Successfully",
+      message: "Error in Adding Content",
     });
   }
 };
 
 const getContent = async (req, res) => {
   try {
-    console.log("1");
     data = await Content.findAll({});
 
-    if (data)
-      return res.status(200).send({
-        success: true,
-        data: data,
-        message: "Get Succesfully",
-      });
+    if (data) response(res, 200, true, data, "Get Succesfully");
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -66,12 +74,7 @@ const updateStatus = async (req, res) => {
         { isActive: isActive },
         { where: { id: id } }
       );
-
-      return res.status(200).send({
-        success: true,
-        data: isActive,
-        message: "Status Update Succesfully",
-      });
+      response(res, 200, true, isActive, "Status Update Succesfully");
     } else {
       return res.status(400).send({
         success: false,
@@ -88,8 +91,39 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const deleteFile = async (req, res) => {
+  try {
+    let result = await Content.findAll({ where: { id: req.query.id } });
+    console.log(result[0].dataValues.isDeleted);
+    if (!result[0].dataValues.isDeleted) {
+      let data = await Content.update(
+        { isDeleted: true },
+        { where: { id: req.query.id } }
+      );
+      return res.status(200).send({
+        success: true,
+        data: data,
+        message: "Deleted Succesfully",
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Alreday Deleted",
+      });
+    }
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Deletion Failed",
+    });
+  }
+};
+
 module.exports = {
   create,
   getContent,
   updateStatus,
+  deleteFile,
 };

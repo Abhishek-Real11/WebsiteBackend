@@ -2,44 +2,43 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class IndianT20League extends Model {
-}
+class IndianT20League extends Model {}
 
 IndianT20League.init(
   {
-   captain:{
-    type:DataTypes.STRING,
-    allowNull:false
-   },
-   team:{
-    type:DataTypes.STRING,
-    allowNull:false
-   },
-   coach:{
-    type:DataTypes.STRING,
-    allowNull:false
-   },
-   titles:{
-    type:DataTypes.STRING
-   },
-   majorSignings:{
-    type:DataTypes.STRING
-   },
-   teamlogo:{
-    type: DataTypes.STRING,
-   },
-   playerlogo:{
-    type: DataTypes.STRING,
-   },
-   status:{
-    type:DataTypes.BOOLEAN,
-    defaultValue: true,
-   }
+    captain: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    team: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    coach: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    titles: {
+      type: DataTypes.STRING,
+    },
+    majorSignings: {
+      type: DataTypes.STRING,
+    },
+    teamlogo: {
+      type: DataTypes.STRING,
+    },
+    playerlogo: {
+      type: DataTypes.STRING,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
- 
+
   {
-    sequelize, 
-    modelName: "IndianT20League", 
+    sequelize,
+    modelName: "IndianT20League",
     createdAt: false,
     updatedAt: false,
   }

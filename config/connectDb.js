@@ -1,6 +1,5 @@
 const sequelize = require("./db.js");
 
-
 const connectDB = async () => {
   try {
     await sequelize.authenticate();

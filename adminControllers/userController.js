@@ -4,6 +4,7 @@ const otpGenerator = require("otp-generator");
 const User = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const response = require("../config/response");
 
 const saltRounds = 10;
 const regex = new RegExp(
@@ -26,7 +27,8 @@ const signup = async (req, res) => {
         email: email,
         password: password,
       });
-      res.status(200).send(user);
+      response(res, 200, true, user, "SuccessFully Sign Up");
+      // res.status(200).send(user);
     } else {
       return res
         .status(200)
@@ -42,10 +44,14 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     if (!req.body.email || !req.body.password) {
-      return res.status(400).send("Insufficient Data");
+      return res.status(404).send("Insufficient Data");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (data === null) return res.send("User Not Found!");
+    if (data === null)
+      return res.status(404).send({
+        success: false,
+        message: "User Not Found",
+      });
     let result = await bcrypt.compare(
       req.body.password,
       data.dataValues.password
@@ -61,6 +67,7 @@ const login = async (req, res) => {
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: "30m",
       });
+
       return res.status(200).send({
         success: true,
         token: token,

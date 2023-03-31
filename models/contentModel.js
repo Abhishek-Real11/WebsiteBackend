@@ -24,11 +24,12 @@ Content.init(
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-    },slug:{
+    },
+    slug: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique:true
-    }
+      // allowNull: false,
+      // unique:true
+    },
   },
   {
     sequelize,
