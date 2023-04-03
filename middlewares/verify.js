@@ -16,7 +16,10 @@ module.exports = async (req, res, next) => {
         return res.status(401).send({
           success: false,
           data: "",
-          message: "Token Expired, Please Log-in Again",
+          token: {
+            isExpired: true,
+            message: "Token Expired, Please Log-in Again",
+          },
         });
       }
 

@@ -1,11 +1,10 @@
-const { and } = require("sequelize");
 const Faqs = require("../models/faqModel");
-require("dotenv").config();
+
 const addfaqs = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data)
-    const subType=req.body.subType||""
+    console.log(data);
+    const subType = req.body.subType || "";
     let data1 = await Faqs.create({
       ques: data.ques,
       answer: data.answer,
@@ -78,8 +77,40 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const deleteFaqs = async (req, res) => {
+  try {
+    let result = await Faqs.findAll({ where: { id: req.query.id } });
+    // console.log(result)
+
+    if (!result[0].dataValues.isDeleted) {
+      let data = await Faqs.update(
+        { isDeleted: true },
+        { where: { id: req.query.id } }
+      );
+      return res.status(202).send({
+        success: true,
+        data: data,
+        message: "Deleted Succesfully"
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Alreday Deleted"
+      });
+    }
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Deletion Failed",
+    });
+  }
+};
+
 module.exports = {
   addfaqs,
   getfaqs,
   updateStatus,
+  deleteFaqs,
 };

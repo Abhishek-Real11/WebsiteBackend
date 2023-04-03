@@ -6,10 +6,6 @@ const {
   deleteFile,
 } = require("../controllers/fileUploadController");
 
-const upload1 = require("../config/multer");
-
 router.get("/getbanner", getFile);
-
-router.post("/deleteImage", deleteFile);
 
 module.exports = router;

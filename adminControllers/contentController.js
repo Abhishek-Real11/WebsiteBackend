@@ -94,13 +94,14 @@ const updateStatus = async (req, res) => {
 const deleteFile = async (req, res) => {
   try {
     let result = await Content.findAll({ where: { id: req.query.id } });
-    console.log(result[0].dataValues.isDeleted);
+    // console.log(result)
+   
     if (!result[0].dataValues.isDeleted) {
       let data = await Content.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
-      return res.status(200).send({
+      return res.status(202).send({
         success: true,
         data: data,
         message: "Deleted Succesfully",
@@ -146,10 +147,33 @@ const getSlug = async (req, res) => {
   }
 };
 
+const editContent = async (req, res) => {
+  try {
+    let description = req.body.description;
+    let id = req.query.id;
+    let data = await Content.update(
+      { description: description },
+      { where: { id: id } }
+    );
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "Content change Successfully",
+    });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Error",
+    });
+  }
+};
+
 module.exports = {
   create,
   getContent,
   updateStatus,
   deleteFile,
   getSlug,
+  editContent,
 };

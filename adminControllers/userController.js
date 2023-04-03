@@ -47,10 +47,11 @@ const login = async (req, res) => {
       return res.status(404).send("Insufficient Data");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (data === null)
-      return res.status(404).send({
+    if (!data)
+      return res.status(401).send({
         success: false,
-        message: "User Not Found",
+        data: "",
+        message: "Invalid Credentials",
       });
     let result = await bcrypt.compare(
       req.body.password,
@@ -75,7 +76,9 @@ const login = async (req, res) => {
         message: "User login successfully",
       });
     } else {
-      return res.status(400).send("Incorrect Email or Password");
+      return res
+        .status(401)
+        .send({ success: false, message: "Invalid Credentials" });
     }
   } catch (error) {
     return res.status(400).send(error);
@@ -89,7 +92,11 @@ const getOtp = async (req, res) => {
       return res.status(400).send("Please Enter Email");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (data === null) return res.status(400).send("User Does'nt exists");
+    if (data === null) return res.status(401).send({
+      success: false,
+      data: "",
+      message: "User Doesn't Exists",
+    });
     let otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       specialChars: false,
@@ -133,7 +140,11 @@ const resetPassword = async (req, res) => {
   try {
     const { email, otp, password } = req.body;
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (data === null) return res.status(400).send("User Does'nt exists");
+    if (!data) return res.status(401).send({
+      success: false,
+      data: "",
+      message: "User Doesn't Exists",
+    });
 
     if (otp === data.dataValues.otp) {
       let reg_result = regex.test(password);
@@ -142,7 +153,7 @@ const resetPassword = async (req, res) => {
           success: false,
           data: "",
           message:
-            "Password Must Be Eight Characters Including One Uppercase Letter, One Lowercase Letter,, One Special Character And Alphanumeric Characters.",
+            "Password Must Be Eight Characters Including One Uppercase Letter, One Lowercase Letter, One Special Character And Alphanumeric Characters.",
         });
       let newpassword = await bcrypt.hash(password, saltRounds);
       const result = await User.update(
@@ -156,7 +167,7 @@ const resetPassword = async (req, res) => {
           message: "Otp Verified and Password Reset Successfully",
         });
     } else {
-      return res.status(200).send({
+      return res.status(401).send({
         success: false,
         data: "",
         message: "OTP Verfication Failed",
