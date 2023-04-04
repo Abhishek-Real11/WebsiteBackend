@@ -1,5 +1,6 @@
 const image = require("../models/imageModel");
 require("dotenv").config();
+const { getPagination, getPagingData } = require("../config/paginate");
 const uploadfile = async (req, res) => {
   try {
     const file = req.file;
@@ -42,13 +43,26 @@ const uploadfile = async (req, res) => {
 
 const getFile = async (req, res) => {
   try {
-    let data = await image.findAll({});
+    // let data = await image.findAll({});
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
 
-    if (data)
-      return res.status(200).send({
-        success: true,
-        data: data,
-        message: "Get Succesfully",
+    image
+      .findAndCountAll({ limit, offset })
+      .then((data) => {
+        const response = getPagingData(data, page, limit);
+        return res.status(200).send({
+          success: true,
+          data: response,
+          message: "Get Succesfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({                  
+          success: true,
+          message:
+            err.message || "Some error occurred while retrieving Banner's.",
+        });
       });
   } catch (error) {
     return res.status(400).send({

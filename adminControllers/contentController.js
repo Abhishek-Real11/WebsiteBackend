@@ -1,6 +1,7 @@
 const Content = require("../models/contentModel");
 const slugify = require("slugify");
 const response = require("../config/response");
+const { getPagination, getPagingData } = require("../config/paginate");
 
 const create = async (req, res) => {
   try {
@@ -50,9 +51,25 @@ const create = async (req, res) => {
 
 const getContent = async (req, res) => {
   try {
-    data = await Content.findAll({});
+    let data;
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
 
-    if (data) response(res, 200, true, data, "Get Succesfully");
+    Content.findAndCountAll({ where:{isDeleted:0}, limit, offset })
+      .then((data) => {
+        const response = getPagingData(data, page, limit);
+        return res.status(200).send({
+          success: true,
+          data: response,
+          message: "Get Succesfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message: err.message || "Some error occurred while retrieving Content.",
+        });
+      });
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -74,7 +91,7 @@ const updateStatus = async (req, res) => {
         { isActive: isActive },
         { where: { id: id } }
       );
-      response(res, 200, true, isActive, "Status Update Succesfully");
+      response(res, 200, true, isActive, "Status Updated Succesfully");
     } else {
       return res.status(400).send({
         success: false,
@@ -95,7 +112,7 @@ const deleteFile = async (req, res) => {
   try {
     let result = await Content.findAll({ where: { id: req.query.id } });
     // console.log(result)
-   
+
     if (!result[0].dataValues.isDeleted) {
       let data = await Content.update(
         { isDeleted: true },

@@ -1,4 +1,5 @@
 const Faqs = require("../models/faqModel");
+const { getPagination, getPagingData } = require("../config/paginate");
 
 const addfaqs = async (req, res) => {
   try {
@@ -29,13 +30,24 @@ const addfaqs = async (req, res) => {
 const getfaqs = async (req, res) => {
   try {
     let data;
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
 
-    data = await Faqs.findAll({});
-    return res.status(200).send({
-      success: true,
-      data: data,
-      message: "ALL Faqs Sent Successfully",
-    });
+    Faqs.findAndCountAll({ limit, offset })
+      .then((data) => {
+        const response = getPagingData(data, page, limit);
+        return res.status(200).send({
+          success: true,
+          data: response,
+          message: "Get Succesfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message: err.message || "Some error occurred while retrieving FAQS.",
+        });
+      });
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -90,13 +102,13 @@ const deleteFaqs = async (req, res) => {
       return res.status(202).send({
         success: true,
         data: data,
-        message: "Deleted Succesfully"
+        message: "Deleted Succesfully",
       });
     } else {
       return res.status(400).send({
         success: false,
         data: "",
-        message: "Alreday Deleted"
+        message: "Alreday Deleted",
       });
     }
   } catch (error) {
