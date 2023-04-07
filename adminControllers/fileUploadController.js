@@ -9,7 +9,7 @@ const uploadfile = async (req, res) => {
       return res.status(400).send({
         success: false,
         data: "",
-        message: "Please Select Image ",
+        message: "Please Select Image ",    
       });
 
     if (!type)
@@ -58,7 +58,7 @@ const getFile = async (req, res) => {
         });
       })
       .catch((err) => {
-        res.status(500).send({                  
+        res.status(500).send({
           success: true,
           message:
             err.message || "Some error occurred while retrieving Banner's.",
