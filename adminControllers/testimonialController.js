@@ -76,8 +76,40 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const deleteTestimonial = async (req, res) => {
+  try {
+    console.log(req.query.id);
+    let result = await Testimonial.findAll({ where: { id: req.query.id } });
+
+    if (!result[0].dataValues.isDeleted) {
+      let data = await Testimonial.update(
+        { isDeleted: true },
+        { where: { id: req.query.id } }
+      );
+      return res.status(202).send({
+        success: true,
+        data: data,
+        message: "Deleted Succesfully",
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Alreday Deleted",
+      });
+    }
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Deletion Failed",
+    });
+  }
+};
+
 module.exports = {
   addTestimonial,
   getTestimonial,
   updateStatus,
+  deleteTestimonial,
 };

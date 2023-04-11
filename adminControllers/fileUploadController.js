@@ -9,7 +9,7 @@ const uploadfile = async (req, res) => {
       return res.status(400).send({
         success: false,
         data: "",
-        message: "Please Select Image ",    
+        message: "Please Select Image ",
       });
 
     if (!type)
@@ -48,7 +48,7 @@ const getFile = async (req, res) => {
     const { limit, offset } = getPagination(page, size);
 
     image
-      .findAndCountAll({ limit, offset })
+      .findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         return res.status(200).send({
@@ -108,16 +108,27 @@ const updateStatus = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    let data = await image.update(
-      { isDeleted: true },
-      { where: { id: req.query.id } }
-    );
+    console.log(req.query.id);
+    let result = await image.findAll({ where: { id: req.query.id } });
 
-    return res.status(200).send({
-      success: true,
-      data: data,
-      message: "Deleted Succesfully",
-    });
+
+    if (!result[0].dataValues.isDeleted) {
+      let data = await image.update(
+        { isDeleted: true },
+        { where: { id: req.query.id } }
+      );
+      return res.status(202).send({
+        success: true,
+        data: data,
+        message: "Deleted Succesfully",
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Alreday Deleted",
+      });
+    }
   } catch (error) {
     return res.status(400).send({
       success: false,

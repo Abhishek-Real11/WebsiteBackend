@@ -13,6 +13,6 @@ const upload1 = require("../config/multer");
 router.post("/addbanner", [upload1.single("image")], uploadfile);
 router.get("/getbanner", verify, getFile);
 router.post("/updateBannerStatus", updateStatus);
-router.post("/deleteImage", deleteFile);
+router.delete("/deleteImage", deleteFile);
 
 module.exports = router;

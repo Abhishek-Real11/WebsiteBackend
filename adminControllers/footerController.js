@@ -198,7 +198,7 @@ const deleteFooter = async (req, res) => {
           Mail: req.body.email,
           ConcatNo: req.body.phone,
           SubType: req.body.sub_type,
-        },
+        },  
         { where: { id: id } }
       );
       return res.status(200).send({

@@ -55,7 +55,7 @@ const getContent = async (req, res) => {
     const { page, size } = req.query;
     const { limit, offset } = getPagination(page, size);
 
-    Content.findAndCountAll({ where:{isDeleted:0}, limit, offset })
+    Content.findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         return res.status(200).send({
@@ -67,7 +67,8 @@ const getContent = async (req, res) => {
       .catch((err) => {
         res.status(500).send({
           success: false,
-          message: err.message || "Some error occurred while retrieving Content.",
+          message:
+            err.message || "Some error occurred while retrieving Content.",
         });
       });
   } catch (error) {
