@@ -4,6 +4,6 @@ const { getFooter } = require("../controllers/footerController");
 const verify = require("../middlewares/verify");
 const upload1 = require("../config/multer");
 
-router.get("/getFooter", verify, getFooter);
+router.get("/getFooter", getFooter);
 
 module.exports = router;

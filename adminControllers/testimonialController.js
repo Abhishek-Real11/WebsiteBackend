@@ -27,7 +27,7 @@ const addTestimonial = async (req, res) => {
 const getTestimonial = async (req, res) => {
   try {
     let data;
-    data = await Testimonial.findAll({});
+    data = await Testimonial.findAll({ where: { isDeleted: 0 } });
     return res.status(200).send({
       success: true,
       data: data,
