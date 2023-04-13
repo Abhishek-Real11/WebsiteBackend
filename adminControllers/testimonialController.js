@@ -2,7 +2,6 @@ const Testimonial = require("../models/testimonialModel");
 const addTestimonial = async (req, res) => {
   try {
     const { amount, quote, type } = JSON.parse(req.body.data);
-
     let data = await Testimonial.create({
       image: req.file.location,
       amount: amount,
@@ -78,7 +77,6 @@ const updateStatus = async (req, res) => {
 
 const deleteTestimonial = async (req, res) => {
   try {
-    console.log(req.query.id);
     let result = await Testimonial.findAll({ where: { id: req.query.id } });
 
     if (!result[0].dataValues.isDeleted) {

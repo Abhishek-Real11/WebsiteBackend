@@ -24,6 +24,7 @@ const uploadfile = async (req, res) => {
       type: type,
       status: status,
       isActive: isActive,
+      subType:req.body.subType
     });
     if (data)
       return res.status(200).send({
@@ -108,9 +109,7 @@ const updateStatus = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    console.log(req.query.id);
     let result = await image.findAll({ where: { id: req.query.id } });
-
 
     if (!result[0].dataValues.isDeleted) {
       let data = await image.update(

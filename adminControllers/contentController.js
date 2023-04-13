@@ -112,7 +112,6 @@ const updateStatus = async (req, res) => {
 const deleteFile = async (req, res) => {
   try {
     let result = await Content.findAll({ where: { id: req.query.id } });
-    // console.log(result)
 
     if (!result[0].dataValues.isDeleted) {
       let data = await Content.update(

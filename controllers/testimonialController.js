@@ -7,10 +7,10 @@ const getTestimonial = async (req, res) => {
 
     if (type !== "all") {
       data = await Testimonial.findAll({
-        where: { isActive: "1", type: type },
+        where: { isActive: "1", type: type,isDeleted:0 },
       });
     } else {
-      data = await Testimonial.findAll({ where: { isActive: "1" } });
+      data = await Testimonial.findAll({ where: { isActive: "1",isDeleted:0 } });
     }
     return res.status(200).send({
       success: true,

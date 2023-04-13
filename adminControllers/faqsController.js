@@ -4,7 +4,6 @@ const { getPagination, getPagingData } = require("../config/paginate");
 const addfaqs = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
     const subType = req.body.subType || "";
     let data1 = await Faqs.create({
       ques: data.ques,
@@ -92,7 +91,6 @@ const updateStatus = async (req, res) => {
 const deleteFaqs = async (req, res) => {
   try {
     let result = await Faqs.findAll({ where: { id: req.query.id } });
-    // console.log(result)
 
     if (!result[0].dataValues.isDeleted) {
       let data = await Faqs.update(

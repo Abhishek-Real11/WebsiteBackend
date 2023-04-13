@@ -5,9 +5,9 @@ const getContent = async (req, res) => {
     let type = req.query.type || "all";
 
     if (type !== "all") {
-      data = await Content.findAll({ where: { isActive: "1", type: type,isDeleted:0 } });
+      data = await Content.findOne({ where: { isActive: "1", type: type,isDeleted:0 } });
     } else {
-      data = await Content.findAll({ where: { isActive: "1",isDeleted:0 } });
+      data = await Content.findOne({ where: { isActive: "1",isDeleted:0 } });
     }
 
     if (data)
@@ -16,7 +16,11 @@ const getContent = async (req, res) => {
         data: data,
         message: "Get Succesfully",
       });
-  } catch (error) {}
+  } catch (error) {return res.status(400).send({
+    success: false,
+    data: "",
+    message: "Error",
+  });}
 };
 
 module.exports = {
