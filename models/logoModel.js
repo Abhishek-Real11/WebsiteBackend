@@ -2,23 +2,22 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Content extends Model {}
+class Logo extends Model {}
 
-Content.init(
+Logo.init(
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
-    title: {
-      type: DataTypes.TEXT,
+    logo: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+    slug: {
+      type: DataTypes.STRING,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -28,26 +27,17 @@ Content.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    type: {
+    url: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    slug: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique:true
-    },
-    subType:{
-      type: DataTypes.STRING,
-    }
   },
   {
     sequelize,
-    modelName: "Content",
+    modelName: "Logo",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Content;
+module.exports = Logo;

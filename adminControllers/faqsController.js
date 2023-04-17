@@ -55,7 +55,7 @@ const getfaqs = async (req, res) => {
     });
   }
 };
-const updateStatus = async (req, res) => {
+const updateFaqsStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
@@ -121,6 +121,6 @@ const deleteFaqs = async (req, res) => {
 module.exports = {
   addfaqs,
   getfaqs,
-  updateStatus,
+  updateFaqsStatus,
   deleteFaqs,
 };

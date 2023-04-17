@@ -2,23 +2,23 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Content extends Model {}
+class NavBar extends Model {}
 
-Content.init(
+NavBar.init(
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
-    title: {
-      type: DataTypes.TEXT,
+    listname: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+    slug: {
+      type: DataTypes.STRING,
+    //   allowNull: false,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -28,26 +28,25 @@ Content.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    type: {
+    url: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    slug: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique:true
-    },
-    subType:{
-      type: DataTypes.STRING,
-    }
+    order:{
+        type:DataTypes.INTEGER,     
+    },    
+    className: {
+        type: DataTypes.STRING,
+      //   allowNull: false,
+      },
   },
   {
     sequelize,
-    modelName: "Content",
+    modelName: "NavBar",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Content;
+module.exports = NavBar;

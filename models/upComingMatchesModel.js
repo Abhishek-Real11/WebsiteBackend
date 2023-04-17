@@ -2,23 +2,34 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Content extends Model {}
+class UpComingMatches extends Model {}
 
-Content.init(
+UpComingMatches.init(
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
-    title: {
-      type: DataTypes.TEXT,
+    team1_Name: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
+    team2_Name: {
+      type: DataTypes.STRING,
       allowNull: false,
+    },
+    team1_Logo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    team2_Logo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.STRING,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -28,26 +39,22 @@ Content.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    type: {
+    league_Name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    slug: {
+    Schedule: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true
     },
-    subType:{
-      type: DataTypes.STRING,
-    }
   },
   {
     sequelize,
-    modelName: "Content",
+    modelName: "UpComingMatches",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Content;
+module.exports = UpComingMatches;

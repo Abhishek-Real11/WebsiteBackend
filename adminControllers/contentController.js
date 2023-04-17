@@ -5,7 +5,7 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const create = async (req, res) => {
   try {
-    const { value, type } = req.body;
+    const { value, type,subType } = req.body;
     const title = req.body.title || "";
     if (!value)
       return res.status(200).send({
@@ -22,6 +22,7 @@ const create = async (req, res) => {
         description: value,
         type: type,
         slug: slug,
+        subType:subType
       });
       return res.status(200).send({
         success: true,
@@ -109,7 +110,7 @@ const updateStatus = async (req, res) => {
   }
 };
 
-const deleteFile = async (req, res) => {
+const deleteContent = async (req, res) => {
   try {
     let result = await Content.findAll({ where: { id: req.query.id } });
 
@@ -190,7 +191,7 @@ module.exports = {
   create,
   getContent,
   updateStatus,
-  deleteFile,
+  deleteContent,
   getSlug,
   editContent,
 };

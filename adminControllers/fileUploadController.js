@@ -52,6 +52,7 @@ const getFile = async (req, res) => {
       .findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
+        // console.log(response.result)
         return res.status(200).send({
           success: true,
           data: response,
@@ -73,7 +74,7 @@ const getFile = async (req, res) => {
     });
   }
 };
-const updateStatus = async (req, res) => {
+const updateFileStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
@@ -140,6 +141,6 @@ const deleteFile = async (req, res) => {
 module.exports = {
   uploadfile,
   getFile,
-  updateStatus,
+  updateFileStatus,
   deleteFile,
 };

@@ -41,7 +41,7 @@ const getTestimonial = async (req, res) => {
   }
 };
 
-const updateStatus = async (req, res) => {
+const updateTestimonialStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
@@ -108,6 +108,6 @@ const deleteTestimonial = async (req, res) => {
 module.exports = {
   addTestimonial,
   getTestimonial,
-  updateStatus,
+  updateTestimonialStatus,
   deleteTestimonial,
 };

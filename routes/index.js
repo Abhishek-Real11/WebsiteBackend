@@ -6,6 +6,7 @@ const indian_T20_League = require("./indian-T20-League");
 const testimonial = require("./testimonial");
 const content = require("./content");
 const footer=require("./Footer")
+const home=require('./Home/index')
 const router = express.Router();
 
 router.use("/", fileupload);
@@ -14,5 +15,7 @@ router.use("/", indian_T20_League);
 router.use("/", testimonial);
 router.use("/", content);
 router.use('/',footer);
+router.use('/home',home);
+
 
 module.exports = router;
