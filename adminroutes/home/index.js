@@ -4,17 +4,26 @@ const {
   uploadLogo,
   getLogo,
   deleteLogo,
-  updateLogoStatus
+  updateLogoStatus,
 } = require("../../adminControllers/logoController");
 const verify = require("../../middlewares/verify");
-const { createNavBar, getNavBar } = require("../../adminControllers/navBarController");
+const {
+  createNavBar,
+  getNavBar,
+  deleteNavBar,
+} = require("../../adminControllers/navBarController");
 const {
   uploadfile,
   getFile,
   updateFileStatus,
   deleteFile,
 } = require("../../adminControllers/fileUploadController");
-const { createSquareBox, get } = require("../../adminControllers/squareBoxControlller");
+const {
+  createSquareBox,
+  get,
+  updateSquareBoxStatus,
+  editSquareBox,
+} = require("../../adminControllers/squareBoxControlller");
 const {
   create,
   getContent,
@@ -35,25 +44,32 @@ const {
   updateFaqsStatus,
   deleteFaqs,
 } = require("../../adminControllers/faqsController");
+const {
+  createHowToPlay,
+  getHowToPlay,
+  updateHowToPlay,
+} = require("../../adminControllers/howToPlayController");
 
 const upload1 = require("../../config/multer");
 
 router.post("/addLogo", [upload1.single("image")], uploadLogo);
 router.get("/getLogo", verify, getLogo);
 router.delete("/deleteLogo", verify, deleteLogo);
-router.post("/updateLogoStatus",verify,updateLogoStatus);
+router.post("/updateLogoStatus", verify, updateLogoStatus);
 
-
-router.post("/createNavBar", verify,createNavBar);
+router.post("/createNavBar", verify, createNavBar);
 router.get("/getNavBar", verify, getNavBar);
+router.delete("/deleteNavBar", verify, deleteNavBar);
 
 router.post("/addbanner", [upload1.single("image")], uploadfile);
 router.get("/getbanner", verify, getFile);
 router.post("/updateBannerStatus", updateFileStatus);
 router.delete("/deleteImage", deleteFile);
 
-router.post("/create/squareBox", [upload1.single("image")], createSquareBox);
-router.get("/get/squareBox", verify, get);
+router.post("/createSquareBox", [upload1.single("image")], createSquareBox);
+router.get("/getSquareBox", verify, get);
+router.post("/updateSquareBoxStatus", verify, updateSquareBoxStatus);
+router.post("/editSquareBox", verify, editSquareBox);
 
 router.post("/createContent", create);
 router.get("/getContent", verify, getContent);
@@ -72,4 +88,10 @@ router.get("/getfaqs", verify, getfaqs);
 router.post("/updateFaqStatus", updateFaqsStatus);
 router.delete("/deleteFaqs", deleteFaqs);
 
+
+router.post('/createHowToPlay',[upload1.single("image")],createHowToPlay)
+router.get('/getHowToPlay',verify,getHowToPlay)
+router.post('/getHowToPlay',updateHowToPlay)
+
 module.exports = router;
+ 

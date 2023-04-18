@@ -45,11 +45,11 @@ const uploadfile = async (req, res) => {
 const getFile = async (req, res) => {
   try {
     // let data = await image.findAll({});
-    const { page, size } = req.query;
+    const { page, size,type } = req.query;
     const { limit, offset } = getPagination(page, size);
 
     image
-      .findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
+      .findAndCountAll({ where: { isDeleted: 0,type:type }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         // console.log(response.result)

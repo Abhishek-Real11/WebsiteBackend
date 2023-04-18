@@ -6,6 +6,8 @@ const { getContent } = require("../../controllers/contentController");
 const { getfaqs } = require("../../controllers/faqsController");
 const { getFile } = require("../../controllers/fileUploadController");
 const { getTestimonial } = require("../../controllers/testimonialController");
+const {getSquareBox}=require("../../controllers/squareBoxControlller")
+
 
 
 router.get("/getLogo", getLogo);
@@ -14,6 +16,7 @@ router.get("/getNavBar", getNavBar);
 router.get("/getContent", getContent);
 router.get("/getFaqs", getfaqs);
 router.get("/getbanner", getFile);
+router.get('/getSquareBox',getSquareBox);
 router.get("/getTestimonial", getTestimonial);
 
 module.exports = router;

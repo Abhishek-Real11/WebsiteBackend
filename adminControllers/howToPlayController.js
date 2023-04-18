@@ -1,36 +1,51 @@
-const Logo = require("../models/logoModel");
+const howToPlayModel = require("../models/howToPlayModel");
 require("dotenv").config();
 const slugify = require("slugify");
 const { getPagination, getPagingData } = require("../config/paginate");
-const uploadLogo = async (req, res) => {
+const createHowToPlay = async (req, res) => {
   try {
-    const { url } = JSON.parse(req.body.data);
-    console.log(req.body);
-    let data = await Logo.create({
-      logo: req.file.location,
-      url: url,
-    });
+
+    let data;
+    if (req.query.subType == "steps") {
+      data = await howToPlayModel.create({
+        editor: req.body.value,
+        type: req.query.type,
+        subType: req.query.subType,
+      });
+    } else {
+      const { order, description } = JSON.parse(req.body.data);
+      data = await howToPlayModel.create({
+        order: order,
+        description: description,
+        image: req.file.location,
+        type: req.query.type,
+        subType: req.query.subType,
+      });
+    }
+
     return res.status(200).send({
       success: true,
       data: data,
-      message: "Logo Added SuccessFully",
+      message: "Added Successfully",
     });
   } catch (error) {
     return res.status(400).send({
       success: false,
       data: "",
-      message: "Error in Adding Logo",
+      message: "Error",
     });
   }
 };
 
-const getLogo = async (req, res) => {
+const getHowToPlay = async (req, res) => {
   try {
     let data;
-    data = await Logo.findAll({
+    data = await howToPlayModel.findAll({
       where: {
         isDeleted: 0,
+        subType: req.query.subType,
       },
+      order: [["order", "Asc"]],
     });
     return res.status(200).send({
       success: true,
@@ -46,45 +61,15 @@ const getLogo = async (req, res) => {
   }
 };
 
-const deleteLogo = async (req, res) => {
-  try {
-    let result = await Logo.findAll({ where: { id: req.query.id } });
-
-    if (!result[0].dataValues.isDeleted) {
-      let data = await Logo.update(
-        { isDeleted: true },
-        { where: { id: req.query.id } }
-      );
-      return res.status(202).send({
-        success: true,
-        data: data,
-        message: "Deleted Succesfully",
-      });
-    } else {
-      return res.status(404).send({
-        success: false,
-        data: "",
-        message: "Data Not Found",
-      });
-    }
-  } catch (error) {
-    return res.status(400).send({
-      success: false,
-      data: "",
-      message: "Deletion Failed",
-    });
-  }
-};
-
-const updateLogoStatus = async (req, res) => {
+const updateHowToPlay = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await Logo.findAll({ where: { id: id } });
+    let result = await howToPlayModel.findAll({ where: { id: id } });
 
     if (isActive != result[0].dataValues.isActive) {
-      let data = await Logo.update(
+      let data = await NavBarModel.update(
         { isActive: isActive },
         { where: { id: id } }
       );
@@ -111,8 +96,7 @@ const updateLogoStatus = async (req, res) => {
 };
 
 module.exports = {
-  uploadLogo,
-  getLogo,
-  deleteLogo,
-  updateLogoStatus,
+  createHowToPlay,
+  getHowToPlay,
+  updateHowToPlay,
 };

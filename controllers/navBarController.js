@@ -8,7 +8,6 @@ const getNavBar = async (req, res) => {
         let data;
         data = await NavBarModel.findAll({where:{
           isDeleted:0,
-          isActive:1
         },order: [
           ['order', 'Asc'],
       ]});

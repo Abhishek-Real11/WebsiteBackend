@@ -29,10 +29,10 @@ const addfaqs = async (req, res) => {
 const getfaqs = async (req, res) => {
   try {
     let data;
-    const { page, size } = req.query;
+    const { page, size,type } = req.query;
     const { limit, offset } = getPagination(page, size);
 
-    Faqs.findAndCountAll({ limit, offset })
+    Faqs.findAndCountAll({ where: { isDeleted: 0,type:type },limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         return res.status(200).send({

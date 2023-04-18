@@ -2,9 +2,9 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class NavBar extends Model {}
+class HowToPlay extends Model {}
 
-NavBar.init(
+HowToPlay.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -12,37 +12,40 @@ NavBar.init(
       allowNull: false,
       primaryKey: true,
     },
-    listname: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    order: {
+      type: DataTypes.INTEGER,
     },
-    slug: {
-      type: DataTypes.STRING,
-    //   allowNull: false,
+    image: {
+      type: DataTypes.TEXT,
+    },
+    editor: {
+      type: DataTypes.TEXT,
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
     },
     isDeleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    type: {
+      type: DataTypes.TEXT,
     },
-    order:{
-        type:DataTypes.INTEGER,     
-    },    
-    className: {
-        type: DataTypes.STRING,
-      //   allowNull: false,
-      },
+    subType: {
+      type: DataTypes.TEXT,
+    },
   },
   {
     sequelize,
-    modelName: "NavBar",
+    modelName: "HowToPlay",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
     updatedAt: true,
   }
 );
 
-module.exports = NavBar;
+module.exports = HowToPlay;
