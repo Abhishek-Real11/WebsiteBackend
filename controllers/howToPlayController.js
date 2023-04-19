@@ -1,18 +1,18 @@
-const SquareBoxModel = require("../models/squareBoxModel");
+const howToPlayModel = require("../models/howToPlayModel");
 require("dotenv").config();
+const slugify = require("slugify");
 const { getPagination, getPagingData } = require("../config/paginate");
-
-
-const getSquareBox = async (req, res) => {
+   
+const getHowToPlay = async (req, res) => {
   try {
     let data;
-    data = await SquareBoxModel.findAll({
+    data = await howToPlayModel.findAll({
       where: {
-        isActive: 1,
-        isDeleted:0,
-        type: req.query.type,
+        isDeleted: 0,
+        isActive:1,
+        subType: req.query.subType,
       },
-      order: [["createdAt", "Asc"]],
+      order: [["order", "Asc"]],
     });
     return res.status(200).send({
       success: true,
@@ -28,9 +28,6 @@ const getSquareBox = async (req, res) => {
   }
 };
 
-
 module.exports = {
-
-  getSquareBox,
- 
+  getHowToPlay,
 };

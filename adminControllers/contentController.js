@@ -5,8 +5,9 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const create = async (req, res) => {
   try {
-    const { value, type,subType } = req.body;
+    const { value } = req.body;
     const title = req.body.title || "";
+   
     if (!value)
       return res.status(200).send({
         success: true,
@@ -16,22 +17,22 @@ const create = async (req, res) => {
     let slug;
     let data;
     if (title.length > 0) {
-      slug = slugify(title, { lower: true, strict: true });
+      slug = slugify(title, { lower:  true, strict: true });
+    
       data = await Content.create({
         title: title,
         description: value,
-        type: type,
-        slug: slug,
-        subType:subType
-      });
+        type: req.query.type,
+        slug: slug,                                                                    
+      });                  
       return res.status(200).send({
-        success: true,
-        data: data,
-        message: "Content Added Successfully",
-      });
-    }
-
-    data = await Content.create({
+        success: true,       
+        data: data,                                                
+        message: "Content Added Successfully",           
+      });       
+    }    
+ 
+     data = await Content.create({                    
       title: "",
       description: value,
       type: type,
@@ -56,7 +57,7 @@ const getContent = async (req, res) => {
     const { page, size } = req.query;
     const { limit, offset } = getPagination(page, size);
 
-    Content.findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
+    Content.findAndCountAll({ where: { isDeleted: 0,type:req.query.type }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         return res.status(200).send({

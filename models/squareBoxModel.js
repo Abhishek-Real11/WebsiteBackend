@@ -28,25 +28,15 @@ SquareBox.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    // url: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
-    // order:{
-    //     type:DataTypes.NUMBER,     
-    // },
     title:{
         type: DataTypes.STRING,
-    //   allowNull: false,
     },
     description:{
         type: DataTypes.STRING,
-    //   allowNull: false,
     },
     type:{
       type: DataTypes.STRING,
-    }
-    
+    }    
   },
   {
     sequelize,

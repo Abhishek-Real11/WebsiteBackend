@@ -47,7 +47,7 @@ const {
 const {
   createHowToPlay,
   getHowToPlay,
-  updateHowToPlay,
+  updateHowToPlayStatus,
 } = require("../../adminControllers/howToPlayController");
 
 const upload1 = require("../../config/multer");
@@ -74,7 +74,7 @@ router.post("/editSquareBox", verify, editSquareBox);
 router.post("/createContent", create);
 router.get("/getContent", verify, getContent);
 router.post("/updateContentStatus", updateStatus);
-router.delete("/deleteContent", deleteFile);
+router.delete("/deleteContent", deleteContent);
 router.get("/content/:slug", getSlug);
 router.post("/editContent", editContent);
 
@@ -91,7 +91,7 @@ router.delete("/deleteFaqs", deleteFaqs);
 
 router.post('/createHowToPlay',[upload1.single("image")],createHowToPlay)
 router.get('/getHowToPlay',verify,getHowToPlay)
-router.post('/getHowToPlay',updateHowToPlay)
+router.post('/updateHowToPlayStatus',updateHowToPlayStatus)
 
 module.exports = router;
  

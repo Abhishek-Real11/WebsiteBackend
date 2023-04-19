@@ -9,7 +9,7 @@ const footer=require("./Footer")
 const home=require('./Home/index')
 const router = express.Router();
 
-router.use("/", fileupload);
+// router.use("/", fileupload);
 router.use("/", faqs);
 router.use("/", indian_T20_League);
 router.use("/", testimonial);

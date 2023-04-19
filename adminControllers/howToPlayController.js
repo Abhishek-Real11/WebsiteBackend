@@ -4,21 +4,25 @@ const slugify = require("slugify");
 const { getPagination, getPagingData } = require("../config/paginate");
 const createHowToPlay = async (req, res) => {
   try {
-
     let data;
     if (req.query.subType == "steps") {
+       const { order, description,title } = JSON.parse(req.body.data);
       data = await howToPlayModel.create({
-        editor: req.body.value,
+        order: order,
+        title:title,
+        description: description,
         type: req.query.type,
         subType: req.query.subType,
+   
       });
     } else {
-      const { order, description } = JSON.parse(req.body.data);
+      const { order, description,title } = JSON.parse(req.body.data);
       data = await howToPlayModel.create({
         order: order,
         description: description,
         image: req.file.location,
         type: req.query.type,
+        title:title,
         subType: req.query.subType,
       });
     }
@@ -61,19 +65,19 @@ const getHowToPlay = async (req, res) => {
   }
 };
 
-const updateHowToPlay = async (req, res) => {
+const updateHowToPlayStatus = async (req, res) => {
   try {
+    
     let id = req.query.id;
     let isActive = req.query.isActive;
 
     let result = await howToPlayModel.findAll({ where: { id: id } });
-
-    if (isActive != result[0].dataValues.isActive) {
-      let data = await NavBarModel.update(
+   
+    if (isActive !== result[0].dataValues.isActive) {
+      let data = await howToPlayModel.update(
         { isActive: isActive },
         { where: { id: id } }
       );
-
       return res.status(200).send({
         success: true,
         data: isActive,
@@ -98,5 +102,6 @@ const updateHowToPlay = async (req, res) => {
 module.exports = {
   createHowToPlay,
   getHowToPlay,
-  updateHowToPlay,
+  updateHowToPlayStatus,
 };
+

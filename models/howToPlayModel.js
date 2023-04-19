@@ -38,6 +38,9 @@ HowToPlay.init(
     subType: {
       type: DataTypes.TEXT,
     },
+    title:{
+      type: DataTypes.TEXT,
+    }
   },
   {
     sequelize,

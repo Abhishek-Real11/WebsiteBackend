@@ -3,12 +3,12 @@ const Content = require("../models/contentModel");
 const getContent = async (req, res) => {
   try {
     let type = req.query.type || "all";
-    if (type === "cricket-tc") {
+    if (type == "cricket-tc") {
       data = await Content.findAll({
         where: { type: type, isActive: "1", isDeleted: 0 },
       });
-    } else if (type !== "all") {
-      data = await Content.findOfne({
+    } else if (type !="all") {
+      data = await Content.findAll({
         where: { isActive: "1", type: type, isDeleted: 0 },
       });
     } else {
