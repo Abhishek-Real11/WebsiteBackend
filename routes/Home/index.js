@@ -9,6 +9,8 @@ const { getTestimonial } = require("../../controllers/testimonialController");
 const { getSquareBox } = require("../../controllers/squareBoxControlller");
 
 const { getHowToPlay } = require("../../controllers/howToPlayController");
+const {getAppFeatures}=require("../../controllers/appFeaturesController")
+const {getAppFeaturesImage}=require("../../controllers/appFeaturesImageController")
 
 router.get("/getLogo", getLogo);
 router.get("/getNavBar", getNavBar);
@@ -19,5 +21,6 @@ router.get("/getbanner", getFile);
 router.get("/getSquareBox", getSquareBox);
 router.get("/getTestimonial", getTestimonial);
 router.get("/getHowToPlay", getHowToPlay);
-
+router.get("/getAppFeatures", getAppFeatures);
+router.get("/getAppFeaturesImage", getAppFeaturesImage);
 module.exports = router;

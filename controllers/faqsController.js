@@ -8,7 +8,9 @@ const getfaqs = async (req, res) => {
     let type = req.query.type || "all";
 
     if (type !== "all") {
-      data = await Faqs.findAll({ where: { isActive: "1", type: type,isDeleted:0 } });
+      data = await Faqs.findAll({ where: { isActive: "1", type: type,isDeleted:0 },order: [
+        ['createdAt', 'Asc'],
+    ] });
     } else {
       data = await Faqs.findAll({ where: { isActive: "1",isDeleted:0 } });
     }

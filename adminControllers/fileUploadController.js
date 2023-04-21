@@ -24,7 +24,7 @@ const uploadfile = async (req, res) => {
       type: type,
       status: status,
       isActive: isActive,
-      subType:req.body.subType
+      subType:req.body.subType||null
     });
     if (data)
       return res.status(200).send({

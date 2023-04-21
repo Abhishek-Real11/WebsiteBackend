@@ -2,9 +2,9 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class AppFeatures extends Model {}
+class AppFeaturesImage extends Model {}
 
-AppFeatures.init(
+AppFeaturesImage.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -12,21 +12,13 @@ AppFeatures.init(
       allowNull: false,
       primaryKey: true,
     },
-    logo: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
-      defaultValue:"Home"
+      // defaultValue:"Home"
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -39,11 +31,11 @@ AppFeatures.init(
   },
   {
     sequelize,
-    modelName: "AppFeatures",
+    modelName: "AppFeaturesImage",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
     updatedAt: true,
   }
 );
 
-module.exports = AppFeatures;
+module.exports = AppFeaturesImage;

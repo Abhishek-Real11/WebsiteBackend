@@ -22,7 +22,6 @@ Testimonial.init(
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: "activate",
     },
     quote: {
       type: DataTypes.STRING,

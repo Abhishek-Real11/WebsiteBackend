@@ -1,12 +1,12 @@
 const Testimonial = require("../models/testimonialModel");
 const addTestimonial = async (req, res) => {
   try {
-    const { amount, quote, type } = JSON.parse(req.body.data);
+    const { amount, quote } = JSON.parse(req.body.data);
     let data = await Testimonial.create({
       image: req.file.location,
       amount: amount,
       quote: quote,
-      type: type,
+      type: req.query.type,
     });
 
     return res.status(200).send({
@@ -26,7 +26,9 @@ const addTestimonial = async (req, res) => {
 const getTestimonial = async (req, res) => {
   try {
     let data;
-    data = await Testimonial.findAll({ where: { isDeleted: 0 } });
+    data = await Testimonial.findAll({
+      where: { type: req.query.type, isDeleted: 0 },
+    });
     return res.status(200).send({
       success: true,
       data: data,

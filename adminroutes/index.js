@@ -9,6 +9,8 @@ const footer=require('./Footer');
 const router = express.Router();
 
 const home=require('./home/index')
+const aboutus=require('./about/index')
+const indianT20League=require('./indianT20League/index')
  
 
 router.use("/auth", userRoute);
@@ -22,6 +24,10 @@ router.use('/',footer);
 // router.use('/',squareBox);
 
 router.use('/home',home);
+router.use('/aboutUs',aboutus);
+router.use('/indianT20League',indianT20League)
+
+// admin/indianT20League/createContent
 
 
 module.exports = router;

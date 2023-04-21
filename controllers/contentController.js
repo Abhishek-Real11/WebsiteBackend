@@ -7,13 +7,11 @@ const getContent = async (req, res) => {
       data = await Content.findAll({
         where: { type: type, isActive: "1", isDeleted: 0 },
       });
-    } else if (type !="all") {
+    } else{
       data = await Content.findAll({
         where: { isActive: "1", type: type, isDeleted: 0 },
       });
-    } else {
-      data = await Content.findAll({ where: { isActive: "1", isDeleted: 0 } });
-    }
+    } 
     if (data)
       return res.status(200).send({
         success: true,

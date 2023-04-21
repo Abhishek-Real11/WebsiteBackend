@@ -1,21 +1,19 @@
-const Faqs = require("../models/faqModel");
-const { getPagination, getPagingData } = require("../config/paginate");
-
-const addfaqs = async (req, res) => {
+const AboutUsBottomImage = require("../models/aboutUsBottomImageModel");
+const addImage = async (req, res) => {
   try {
-    const data = req.body;
-    const subType = req.body.subType || "";
-    let data1 = await Faqs.create({
-      ques: data.ques,
-      answer: data.answer,
-      type: data.type,
-      subType: subType,
+   
+    const {subType}=JSON.parse(req.body.data);
+    
+    let data = await AboutUsBottomImage.create({
+      image: req.file.location,
+      type: req.query.type,
+      subType:subType||null
     });
 
     return res.status(200).send({
       success: true,
-      data: data1,
-      message: "FAQS added Successfully",
+      data: data,
+      message: "About Us Image Added SuccessFully",
     });
   } catch (error) {
     return res.status(400).send({
@@ -26,29 +24,15 @@ const addfaqs = async (req, res) => {
   }
 };
 
-const getfaqs = async (req, res) => {
+const getImage = async (req, res) => {
   try {
     let data;
-    const { page, size,type } = req.query;
-    const { limit, offset } = getPagination(page, size);
-
-    Faqs.findAndCountAll({ where: { isDeleted: 0,type:type },order: [
-      ['createdAt', 'Asc'],
-  ],limit, offset })
-      .then((data) => {
-        const response = getPagingData(data, page, limit);
-        return res.status(200).send({
-          success: true,
-          data: response,
-          message: "Get Succesfully",
-        });
-      })
-      .catch((err) => {
-        res.status(500).send({
-          success: false,
-          message: err.message || "Some error occurred while retrieving FAQS.",
-        });
-      });
+    data = await AboutUsBottomImage.findAll({ where: { isDeleted: 0 } });
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "Get SuccessFully",
+    });
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -57,22 +41,24 @@ const getfaqs = async (req, res) => {
     });
   }
 };
-const updateFaqsStatus = async (req, res) => {
+
+const updateImageStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await Faqs.findAll({ where: { id: id } });
+    let result = await AboutUsBottomImage.findAll({ where: { id: id } });
 
     if (isActive != result[0].dataValues.isActive) {
-      let data = await Faqs.update(
+      let data = await AboutUsBottomImage.update(
         { isActive: isActive },
         { where: { id: id } }
       );
+
       return res.status(200).send({
         success: true,
         data: isActive,
-        message: "Status Updated Succesfully",
+        message: "Status Update Succesfully",
       });
     } else {
       return res.status(400).send({
@@ -90,12 +76,16 @@ const updateFaqsStatus = async (req, res) => {
   }
 };
 
-const deleteFaqs = async (req, res) => {
+const deleteImage = async (req, res) => {
   try {
-    let result = await Faqs.findAll({ where: { id: req.query.id } });
+   
+    let result = await AboutUsBottomImage.findAll({
+      where: { id: req.query.id },
+    });
+   
 
     if (!result[0].dataValues.isDeleted) {
-      let data = await Faqs.update(
+      let data = await AboutUsBottomImage.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
@@ -121,8 +111,8 @@ const deleteFaqs = async (req, res) => {
 };
 
 module.exports = {
-  addfaqs,
-  getfaqs,
-  updateFaqsStatus,
-  deleteFaqs,
+  addImage,
+  getImage,
+  updateImageStatus,
+  deleteImage,
 };
