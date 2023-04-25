@@ -23,7 +23,8 @@ const create = async (req, res) => {
         title: title,
         description: value,
         type: req.query.type,
-        slug: slug,                                                                    
+        slug: slug,      
+        subType:req.query.subType||null                                                              
       });                  
       return res.status(200).send({
         success: true,       
@@ -36,6 +37,7 @@ const create = async (req, res) => {
       title: "",
       description: value,
       type: type,
+      subType:req.query.subType||null                                                              
     });
     return res.status(200).send({
       success: true,
@@ -58,6 +60,37 @@ const getContent = async (req, res) => {
     const { limit, offset } = getPagination(page, size);
 
     Content.findAndCountAll({ where: { isDeleted: 0,type:req.query.type }, limit, offset })
+      .then((data) => {
+        const response = getPagingData(data, page, limit);
+        return res.status(200).send({
+          success: true,
+          data: response,
+          message: "Get Succesfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving Content.",
+        });
+      });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: error,
+    });
+  }
+};
+
+const getContentBySubType = async (req, res) => {
+  try {
+    let data;
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
+
+    Content.findAndCountAll({ where: { isDeleted: 0,subType:req.query.subType }, limit, offset })
       .then((data) => {
         const response = getPagingData(data, page, limit);
         return res.status(200).send({
@@ -195,4 +228,5 @@ module.exports = {
   deleteContent,
   getSlug,
   editContent,
+  getContentBySubType
 };

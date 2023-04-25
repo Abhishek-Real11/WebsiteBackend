@@ -10,7 +10,7 @@ IndianT20League.init(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     captain: {
       type: DataTypes.STRING,
@@ -36,17 +36,33 @@ IndianT20League.init(
     playerlogo: {
       type: DataTypes.STRING,
     },
-    status: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+    year: {
+      type: DataTypes.TEXT,
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  color1:{
+    type: DataTypes.TEXT,
   },
-
+  color2:{
+    type: DataTypes.TEXT,
+  },
+  color3:{
+    type: DataTypes.TEXT,
+  }
+  },
   {
     sequelize,
     modelName: "IndianT20League",
-    createdAt: false,
-    updatedAt: false,
+    timestamps: true,
+    createdAt: true,
+    updatedAt: true,
   }
 );
 

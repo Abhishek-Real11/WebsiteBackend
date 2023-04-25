@@ -1,10 +1,10 @@
 const IndianT20League = require("../models/indianT20League");
 require("dotenv").config();
 
-const getIndainT20League = async (req, res) => {
+const getIndianT20League = async (req, res) => {
   try {
     let data;
-    data = await IndianT20League.findAll({});
+    data = await IndianT20League.findAll({where:{isActive:1,isDeleted:0}, order: [["createdAt", "Asc"]],});
     return res.status(200).send({
       success: false,
       data: data,
@@ -20,5 +20,5 @@ const getIndainT20League = async (req, res) => {
 };
 
 module.exports = {
-  getIndainT20League,
+  getIndianT20League
 };

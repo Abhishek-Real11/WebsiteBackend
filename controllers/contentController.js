@@ -7,11 +7,11 @@ const getContent = async (req, res) => {
       data = await Content.findAll({
         where: { type: type, isActive: "1", isDeleted: 0 },
       });
-    } else{
+    } else {
       data = await Content.findAll({
         where: { isActive: "1", type: type, isDeleted: 0 },
       });
-    } 
+    }
     if (data)
       return res.status(200).send({
         success: true,
@@ -27,6 +27,29 @@ const getContent = async (req, res) => {
   }
 };
 
+const getContentBySubType = async (req, res) => {
+  try {
+    let data;
+
+    data = await Content.findAll({
+      where: { isActive: "1", subType: req.query.subType, isDeleted: 0 },
+    });
+    if (data)
+      return res.status(200).send({
+        success: true,
+        data: data,
+        message: "Get Succesfully",
+      });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: error,
+    });
+  }
+};
+
 module.exports = {
   getContent,
+  getContentBySubType,
 };

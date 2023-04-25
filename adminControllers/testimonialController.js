@@ -1,6 +1,7 @@
 const Testimonial = require("../models/testimonialModel");
 const addTestimonial = async (req, res) => {
   try {
+    console
     const { amount, quote } = JSON.parse(req.body.data);
     let data = await Testimonial.create({
       image: req.file.location,

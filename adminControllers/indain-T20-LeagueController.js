@@ -1,21 +1,27 @@
 const IndianT20League = require("../models/indianT20League");
 require("dotenv").config();
-const addIndainT20League = async (req, res) => {
+const { getPagination, getPagingData } = require("../config/paginate");
+const addIndianT20League = async (req, res) => {
   try {
     const record = JSON.parse(req.body.data);
     let data = await IndianT20League.create({
-      captain: record.captain,
-      team: record.team,
-      coach: record.coach,
-      titles: record.titles,
-      majorSignings: record.majorSignings,
-      teamlogo: req.file.location,
+      captain: record.captain_name,
+      team: record.team_name,
+      coach: record.coach_name,
+      titles: record.winning_titles,
+      majorSignings: record.new_players,
+      playerlogo: req.files[0].location,
+      teamlogo: req.files[1].location,
+      year: req.query.year || null,
+      color1:record.color_1,
+      color2:record.color_2,
+      color3:record.color_3
     });
 
     return res.status(200).send({
       success: true,
       data: data,
-      message: "Success",
+      message: "Team Added SuccessFully",
     });
   } catch (error) {
     return res.status(400).send({
@@ -26,15 +32,70 @@ const addIndainT20League = async (req, res) => {
   }
 };
 
-const getIndainT20League = async (req, res) => {
+const getIndianT20League = async (req, res) => {
   try {
-    let data;
-    data = await IndianT20League.findAll({});
-    return res.status(200).send({
+    // let data;
+    // data = await IndianT20League.findAll({});
+    // return res.status(200).send({
+    //   success: false,
+    //   data: data,
+    //   message: "Get SuccessFully",
+    // });
+
+    const { page, size } = req.query;
+
+    const { limit, offset } = getPagination(page, size);
+
+    IndianT20League.findAndCountAll({ where: { isDeleted: 0 }, limit, offset })
+      .then((data) => {
+        const response = getPagingData(data, page, limit);
+        return res.status(200).send({
+          success: true,
+          data: response,
+          message: "Get Succesfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving Content.",
+        });
+      });
+  } catch (error) {
+    console.log("11x");
+    return res.status(400).send({
       success: false,
-      data: data,
-      message: "Get SuccessFully",
+      data: "",
+      message: error,
     });
+  }
+};
+
+const updateIndianT20LeagueStatus = async (req, res) => {
+  try {
+    let id = req.query.id;
+    let isActive = req.query.isActive;
+
+    let result = await IndianT20League.findAll({ where: { id: id } });
+
+    if (isActive !== result[0].dataValues.isActive) {
+      let data = await IndianT20League.update(
+        { isActive: isActive },
+        { where: { id: id } }
+      );
+      return res.status(200).send({
+        success: true,
+        data: isActive,
+        message: "Status Update Succesfully",
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        data: "",
+        message: "Please Change Status",
+      });
+    }
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -45,6 +106,7 @@ const getIndainT20League = async (req, res) => {
 };
 
 module.exports = {
-  addIndainT20League,
-  getIndainT20League,
+  addIndianT20League,
+  getIndianT20League,
+  updateIndianT20LeagueStatus,
 };

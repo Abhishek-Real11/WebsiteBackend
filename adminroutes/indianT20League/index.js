@@ -31,6 +31,7 @@ const {
   deleteContent,
   getSlug,
   editContent,
+  getContentBySubType,
 } = require("../../adminControllers/contentController");
 const {
   addTestimonial,
@@ -45,6 +46,12 @@ const {
   deleteFaqs,
 } = require("../../adminControllers/faqsController");
 
+const {
+  addIndianT20League,
+  getIndianT20League,
+  updateIndianT20LeagueStatus
+} = require("../../adminControllers/indain-T20-LeagueController");
+
 const upload1 = require("../../config/multer");
 
 //Header Logo
@@ -53,7 +60,7 @@ router.get("/getLogo", verify, getLogo);
 router.delete("/deleteLogo", verify, deleteLogo);
 router.post("/updateLogoStatus", verify, updateLogoStatus);
 
-//Nav Bar 
+//Nav Bar
 router.post("/createNavBar", verify, createNavBar);
 router.get("/getNavBar", verify, getNavBar);
 router.delete("/deleteNavBar", verify, deleteNavBar);
@@ -77,6 +84,7 @@ router.post("/updateContentStatus", updateStatus);
 router.delete("/deleteContent", deleteContent);
 router.get("/content/:slug", getSlug);
 router.post("/editContent", editContent);
+router.get("/getContentBySubType", verify, getContentBySubType);
 
 //TestiMonial
 router.post("/addTestimonial", [upload1.single("image")], addTestimonial);
@@ -84,5 +92,8 @@ router.get("/getTestimonial", verify, getTestimonial);
 router.post("/updateTestimonialStatus", updateTestimonialStatus);
 router.delete("/deleteTestimonial", deleteTestimonial);
 
+router.post("/addIndianT20League", [upload1.array("image",2)], addIndianT20League);
+router.get("/getIndianT20League",getIndianT20League );
+router.post("/updateIndianT20LeagueStatus", updateIndianT20LeagueStatus);
 
 module.exports = router;
