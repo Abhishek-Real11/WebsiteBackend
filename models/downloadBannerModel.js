@@ -2,9 +2,9 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Faqs extends Model {}
+class DownloadBanner extends Model {}
 
-Faqs.init(
+DownloadBanner.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -12,33 +12,34 @@ Faqs.init(
       allowNull: false,
       primaryKey: true
     },
-    ques: {
-      type: DataTypes.TEXT,
+    image: {
+      type: DataTypes.STRING,
       allowNull: false,
-    },
-    answer: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+      unique:true
     },
     type: {
       type: DataTypes.STRING,
-    },
-    subType: {
-      type: DataTypes.STRING,
+      defaultValue:"Download"
     },
     isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    subType: {
+      type: DataTypes.STRING,
+    },  
   },
   {
     sequelize,
-    modelName: "faqs",
+    modelName: "DownloadBanner",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Faqs;
+module.exports = DownloadBanner;

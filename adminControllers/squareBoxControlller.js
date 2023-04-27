@@ -84,10 +84,10 @@ const updateSquareBoxStatus = async (req, res) => {
 
 const editSquareBox = async (req, res) => {
   try {
-    console.log("!")
+    
     let description = req.body.description;
     let title = req.body.title;
-    console.log(description,title,req.query.id)
+    
     let data = await SquareBoxModel.update(
       { description: description, title: title },
       { where: { id: req.query.id } }

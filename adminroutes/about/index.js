@@ -39,7 +39,7 @@ const {
   getImage,
   updateImageStatus,
   deleteImage,
-}=require('../../adminControllers/aboutUsBottomImageController')
+} = require("../../adminControllers/aboutUsBottomImageController");
 
 const upload1 = require("../../config/multer");
 
@@ -69,10 +69,9 @@ router.get("/getAppFeaturesImage", verify, getAppFeaturesImage);
 router.post("/updateAppFeaturesImageStatus", updateAppFeaturesImageStatus);
 router.delete("/deleteAppFeaturesImage", deleteAppFeaturesImage);
 
-router.post("/addImage", [upload1.single("image")],addImage);
+router.post("/addImage", [upload1.single("image")], addImage);
 router.get("/getImage", verify, getImage);
 router.post("/updateImageStatus", updateImageStatus);
 router.delete("/deleteAboutUsBottomImage", deleteImage);
-
 
 module.exports = router;

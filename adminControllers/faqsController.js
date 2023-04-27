@@ -4,7 +4,7 @@ const { getPagination, getPagingData } = require("../config/paginate");
 const addfaqs = async (req, res) => {
   try {
     const data = req.body;
-    const subType = req.body.subType || "";
+    const subType = req.body.subType || NULL;
     let data1 = await Faqs.create({
       ques: data.ques,
       answer: data.answer,
@@ -28,10 +28,12 @@ const addfaqs = async (req, res) => {
 
 const getfaqs = async (req, res) => {
   try {
+    
+    
     let data;
     const { page, size,type } = req.query;
     const { limit, offset } = getPagination(page, size);
-
+    
     Faqs.findAndCountAll({ where: { isDeleted: 0,type:type },order: [
       ['createdAt', 'Asc'],
   ],limit, offset })

@@ -15,6 +15,7 @@ Logo.init(
     logo: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
     slug: {
       type: DataTypes.STRING,

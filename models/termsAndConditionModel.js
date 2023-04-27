@@ -2,9 +2,9 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Faqs extends Model {}
+class TermsAndConditon extends Model {}
 
-Faqs.init(
+TermsAndConditon.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -12,33 +12,42 @@ Faqs.init(
       allowNull: false,
       primaryKey: true
     },
-    ques: {
+    title: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    answer: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    type: {
-      type: DataTypes.STRING,
-    },
-    subType: {
-      type: DataTypes.STRING,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique:true
+    },
+    subType:{
+      type: DataTypes.STRING,
+    }
   },
   {
     sequelize,
-    modelName: "faqs",
+    modelName: "TermsAndConditon",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Faqs;
+module.exports = TermsAndConditon;

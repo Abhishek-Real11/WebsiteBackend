@@ -63,7 +63,7 @@ const getIndianT20League = async (req, res) => {
         });
       });
   } catch (error) {
-    console.log("11x");
+    
     return res.status(400).send({
       success: false,
       data: "",

@@ -77,7 +77,7 @@ const updateAppFeaturesStatus = async (req, res) => {
 
 const deleteAppFeatures = async (req, res) => {
   try {
-    console.log(req.query.id)
+    
     let result = await AppFeaturesModel.findAll({ where: { id: req.query.id } });
 
     if (!result[0].dataValues.isDeleted) {

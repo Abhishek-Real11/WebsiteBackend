@@ -2,7 +2,7 @@ const path = require("path");
 const aws = require("aws-sdk");
 
 require("dotenv").config();
-
+console.log(process.env.AWS_S3_ACCESS_KEY_ID)
 aws.config.update({
   secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
   accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,

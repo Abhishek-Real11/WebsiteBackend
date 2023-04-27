@@ -5,7 +5,7 @@ const { getPagination, getPagingData } = require("../config/paginate");
 const uploadLogo = async (req, res) => {
   try {
     const { url } = JSON.parse(req.body.data);
-    console.log(req.body);
+    
     let data = await Logo.create({
       logo: req.file.location,
       url: url,

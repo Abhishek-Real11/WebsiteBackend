@@ -1,38 +1,18 @@
-const image = require("../models/imageModel");
+const DownloadBanner = require("../models/downloadBannerModel");
 require("dotenv").config();
 const { getPagination, getPagingData } = require("../config/paginate");
-const uploadfile = async (req, res) => {
+const addDownloadBanner = async (req, res) => {
   try {
-    const file = req.file;
-    const type = req.query.type;
-    if (!req.file)
-      return res.status(400).send({
-        success: false,
-        data: "",
-        message: "Please Select Image ",
-      });
-
-    if (!type)
-      return res.status(400).send({ message: "Please send Type of Image." });
-
-    const status = req.query.status;
-    const isActive = req.query.isActive;
-
-    let src = req.file.location;
-    let data = await image.create({
-      image: src,
-      type: type,
-      status: status,
-      isActive: isActive,
-      subType:req.body.subType||null
+    let data = await DownloadBanner.create({
+      image: req.file.location,
+      subType: req.query.subType,
     });
-    if (data)
-      return res.status(200).send({
-        success: true,
-        data: src,
-        message: "File is Uploaded Succesfully",
-      });
-    else return res.send({ message: "File is not Uploaded Successfully" });
+
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "Banner Added SuccessFully",
+    });
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -42,17 +22,20 @@ const uploadfile = async (req, res) => {
   }
 };
 
-const getFile = async (req, res) => {
+const getDownloadBanner = async (req, res) => {
   try {
-    // let data = await image.findAll({});
-    const { page, size,type } = req.query;
+    
+    const { page, size } = req.query;
+
     const { limit, offset } = getPagination(page, size);
 
-    image
-      .findAndCountAll({ where: { isDeleted: 0,type:type }, limit, offset })
+    DownloadBanner.findAndCountAll({
+      where: { isDeleted: 0, subType: req.query.subType },
+      limit,
+      offset,
+    })
       .then((data) => {
         const response = getPagingData(data, page, limit);
-        
         return res.status(200).send({
           success: true,
           data: response,
@@ -61,9 +44,9 @@ const getFile = async (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          success: true,
+          success: false,
           message:
-            err.message || "Some error occurred while retrieving Banner's.",
+            err.message || "Some error occurred while retrieving Content.",
         });
       });
   } catch (error) {
@@ -74,19 +57,19 @@ const getFile = async (req, res) => {
     });
   }
 };
-const updateFileStatus = async (req, res) => {
+
+const updateDwonloadBannerStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await image.findAll({ where: { id: id } });
+    let result = await DownloadBanner.findAll({ where: { id: id } });
 
-    if (isActive != result[0].dataValues.isActive) {
-      let data = await image.update(
+    if (isActive !== result[0].dataValues.isActive) {
+      let data = await DownloadBanner.update(
         { isActive: isActive },
         { where: { id: id } }
       );
-
       return res.status(200).send({
         success: true,
         data: isActive,
@@ -108,12 +91,12 @@ const updateFileStatus = async (req, res) => {
   }
 };
 
-const deleteFile = async (req, res) => {
+const deleteDownloadBanner = async (req, res) => {
   try {
-    let result = await image.findAll({ where: { id: req.query.id } });
+    let result = await DownloadBanner.findAll({ where: { id: req.query.id } });
 
     if (!result[0].dataValues.isDeleted) {
-      let data = await image.update(
+      let data = await DownloadBanner.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
@@ -139,8 +122,8 @@ const deleteFile = async (req, res) => {
 };
 
 module.exports = {
-  uploadfile,
-  getFile,
-  updateFileStatus,
-  deleteFile,
+  addDownloadBanner,
+  getDownloadBanner,
+  updateDwonloadBannerStatus,
+  deleteDownloadBanner
 };

@@ -2,9 +2,9 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Faqs extends Model {}
+class FaqPage extends Model {}
 
-Faqs.init(
+FaqPage.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -34,11 +34,11 @@ Faqs.init(
   },
   {
     sequelize,
-    modelName: "faqs",
+    modelName: "FaqPage",
     timestamps: true,
     createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    updatedAt: true,
   }
 );
 
-module.exports = Faqs;
+module.exports = FaqPage;
