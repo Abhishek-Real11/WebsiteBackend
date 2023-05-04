@@ -29,17 +29,15 @@ const addfaqs = async (req, res) => {
 const getfaqs = async (req, res) => {
   try {
     let data;
-    const { page, size } = req.query;
-    const { limit, offset } = getPagination(page, size);
 
-    FaqPage.findAndCountAll({ where: { isDeleted: 0 },order: [
-      ['createdAt', 'Asc'],
-  ],limit, offset })
+    FaqPage.findAll({
+      where: { isDeleted: 0, type: req.query.type },
+      order: [["createdAt", "Asc"]],
+    })
       .then((data) => {
-        const response = getPagingData(data, page, limit);
         return res.status(200).send({
           success: true,
-          data: response,
+          data: data,
           message: "Get Succesfully",
         });
       })

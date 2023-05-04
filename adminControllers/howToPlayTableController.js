@@ -1,21 +1,23 @@
-const Faqs = require("../models/faqModel");
+const HowToPlayTable = require("../models/HowToPlayTableModel");
+const slugify = require("slugify");
+const response = require("../config/response");
 const { getPagination, getPagingData } = require("../config/paginate");
 
-const addfaqs = async (req, res) => {
+const createTable = async (req, res) => {
   try {
-    const data = req.body;
-    const subType = req.body.subType || NULL;
-    let data1 = await Faqs.create({
-      ques: data.ques,
-      answer: data.answer,
-      type: data.type,
-      subType: subType,
+    console.log(req.body.data)
+    let data = await HowToPlayTable.create({
+      playerType:req.body.data.playerType,
+      min:req.body.data.Min,
+      max:req.body.data.Max,
+      type:req.query.type,
+      subType:req.query.subType
     });
 
     return res.status(200).send({
       success: true,
-      data: data1,
-      message: "FAQS added Successfully",
+      data: data,
+      message: "Table data Added SuccessFully",
     });
   } catch (error) {
     return res.status(400).send({
@@ -26,31 +28,15 @@ const addfaqs = async (req, res) => {
   }
 };
 
-const getfaqs = async (req, res) => {
+const getTable = async (req, res) => {
   try {
-    
-    
     let data;
-    const { page, size,type } = req.query;
-    const { limit, offset } = getPagination(page, size);
-    console.log(type)
-    Faqs.findAndCountAll({ where: { isDeleted: 0,type:type },order: [
-      ['createdAt', 'Asc'],
-  ],limit, offset })
-      .then((data) => {
-        const response = getPagingData(data, page, limit);
-        return res.status(200).send({
-          success: true,
-          data: response,
-          message: "Get Succesfully",
-        });
-      })
-      .catch((err) => {
-        res.status(500).send({
-          success: false,
-          message: err.message || "Some error occurred while retrieving FAQS.",
-        });
-      });
+    data = await HowToPlayTable.findAndCountAll({ where: { isDeleted: 0 } });
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "Get SuccessFully",
+    });
   } catch (error) {
     return res.status(400).send({
       success: false,
@@ -59,22 +45,24 @@ const getfaqs = async (req, res) => {
     });
   }
 };
-const updateFaqsStatus = async (req, res) => {
+
+const updateTableStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await Faqs.findAll({ where: { id: id } });
+    let result = await HowToPlayTable.findAll({ where: { id: id } });
 
     if (isActive != result[0].dataValues.isActive) {
-      let data = await Faqs.update(
+      let data = await HowToPlayTable.update(
         { isActive: isActive },
         { where: { id: id } }
       );
+
       return res.status(200).send({
         success: true,
         data: isActive,
-        message: "Status Updated Succesfully",
+        message: "Status Update Succesfully",
       });
     } else {
       return res.status(400).send({
@@ -92,12 +80,14 @@ const updateFaqsStatus = async (req, res) => {
   }
 };
 
-const deleteFaqs = async (req, res) => {
+const deleteTable = async (req, res) => {
   try {
-    let result = await Faqs.findAll({ where: { id: req.query.id } });
+    let result = await HowToPlayTable.findAll({
+      where: { id: req.query.id },
+    });
 
     if (!result[0].dataValues.isDeleted) {
-      let data = await Faqs.update(
+      let data = await HowToPlayTable.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
@@ -123,8 +113,8 @@ const deleteFaqs = async (req, res) => {
 };
 
 module.exports = {
-  addfaqs,
-  getfaqs,
-  updateFaqsStatus,
-  deleteFaqs,
+  createTable,
+  getTable,
+  updateTableStatus,
+  deleteTable,
 };

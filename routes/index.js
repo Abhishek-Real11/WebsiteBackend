@@ -11,8 +11,10 @@ const router = express.Router();
 const privacy_policy = require("./privacy-policy/index");
 const faqs = require("./faqs/index");
 const download = require("./download/index");
-const TermsAndCondition=require('./TermsAndCondition/index')
-
+const TermsAndCondition = require("./TermsAndCondition/index");
+const HowToPlay = require("./How-To-Play/index");
+const FantasySports = require("./Fantasy-Sports/index");
+const PressRelease = require("./Press-Release/index");
 // router.use("/", fileupload);
 
 router.use("/", testimonial);
@@ -25,6 +27,8 @@ router.use("/privacy_policy", privacy_policy);
 router.use("/faqs", faqs);
 router.use("/t&C", TermsAndCondition);
 router.use("/download", download);
-
+router.use("/how-to-play", HowToPlay);
+router.use("/fantasy-sports", FantasySports);
+router.use("/press-release", PressRelease);
 //indianT20League/
 module.exports = router;
