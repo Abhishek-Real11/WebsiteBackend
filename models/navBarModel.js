@@ -29,7 +29,8 @@ NavBar.init(
       allowNull: false,
     },
     order:{
-        type:DataTypes.INTEGER,     
+        type:DataTypes.INTEGER, 
+        // unique:true   
     },    
     className: {
         type: DataTypes.STRING,

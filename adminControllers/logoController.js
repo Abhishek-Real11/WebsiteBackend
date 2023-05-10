@@ -5,7 +5,7 @@ const { getPagination, getPagingData } = require("../config/paginate");
 const uploadLogo = async (req, res) => {
   try {
     const { url } = JSON.parse(req.body.data);
-    
+
     let data = await Logo.create({
       logo: req.file.location,
       url: url,
@@ -13,13 +13,14 @@ const uploadLogo = async (req, res) => {
     return res.status(200).send({
       success: true,
       data: data,
-      message: "Logo Added SuccessFully",
+      message: "Logo Added Successfully",
     });
+    console.log("1");
   } catch (error) {
     return res.status(400).send({
       success: false,
       data: "",
-      message: "Error in Adding Logo",
+      message: "Image with this Name Already Present",
     });
   }
 };

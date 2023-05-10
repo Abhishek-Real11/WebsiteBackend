@@ -16,6 +16,7 @@ const HowToPlay = require("./How-To-Play/index");
 const FantasySports = require("./Fantasy-Sports/index");
 const PressRelease = require("./Press-Release/index");
 // router.use("/", fileupload);
+const Footer=require("./Footer/index");
 
 router.use("/", testimonial);
 router.use("/", content);
@@ -30,5 +31,6 @@ router.use("/download", download);
 router.use("/how-to-play", HowToPlay);
 router.use("/fantasy-sports", FantasySports);
 router.use("/press-release", PressRelease);
+router.use("/footer",Footer);
 //indianT20League/
 module.exports = router;

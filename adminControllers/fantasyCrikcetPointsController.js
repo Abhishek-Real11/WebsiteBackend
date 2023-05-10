@@ -3,14 +3,14 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const createFantasyCricketPoints = async (req, res) => {
   try {
-    const { description } = req.body;
+    // const { description } = req.body;
     console.log(req.body, req.type);
 
     let data = await FantasyCricketPoints.create({
-      gameType: req.query.gameType,
+      gameType: req.query.gameType || null,
       actionName: req.query.action_name,
       actionPoints: req.body.data,
-      description: req.body.value,
+      // description: req.body.value,
     });
 
     return res.status(200).send({
@@ -30,27 +30,51 @@ const createFantasyCricketPoints = async (req, res) => {
 const getFantasyCricketPoints = async (req, res) => {
   try {
     let data;
-    FantasyCricketPoints.findAll({
-      where: {
-        isDeleted: 0,
-        gameType: req.query.gameType,
-        actionName: req.query.action_name,
-      },
-    })
-      .then((data) => {
-        return res.status(200).send({
-          success: true,
-          data: data,
-          message: "Get Succesfully",
-        });
+    if (req.query.gameType) {
+      FantasyCricketPoints.findAll({
+        where: {
+          isDeleted: 0,
+          gameType: req.query.gameType,
+          actionName: req.query.action_name,
+        },
       })
-      .catch((err) => {
-        res.status(500).send({
-          success: false,
-          message:
-            err.message || "Some error occurred while retrieving Content.",
+        .then((data) => {
+          return res.status(200).send({
+            success: true,
+            data: data,
+            message: "Get Succesfully",
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving Content.",
+          });
         });
-      });
+    } else {
+      FantasyCricketPoints.findAll({
+        where: {
+          isDeleted: 0,
+          type: req.query.type,
+          actionName: req.query.action_name,
+        },
+      })
+        .then((data) => {
+          return res.status(200).send({
+            success: true,
+            data: data,
+            message: "Get Succesfully",
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving Content.",
+          });
+        });
+    }
   } catch (error) {
     return res.status(400).send({
       success: false,

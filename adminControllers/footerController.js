@@ -188,31 +188,53 @@ const editFooter = async (req, res) => {
   }
 };
 
-const deleteFooter = async (req, res) => {
+const updateFooterStatus = async (req, res) => {
   try {
-    let type = req.type.type;
-    if (typr === "support") {
+    let id = req.query.id;
+    console.log(req.query.isActive,id)
       let data = await Footer.update(
-        {
-          address: req.body.address,
-          Mail: req.body.email,
-          ConcatNo: req.body.phone,
-          SubType: req.body.sub_type,
-        },  
+        { isActive: req.query.isActive },
         { where: { id: id } }
       );
       return res.status(200).send({
         success: true,
         data: data,
-        message: "Data Edited SuccessFully",
+        message: "Data Updated SuccessFully",
       });
-    }
-  } catch (error) {}
+    
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      message: "Error in Getting Data",
+    });
+  }
+};
+
+const deleteFooter = async (req, res) => {
+  try {
+    let id = req.query.id;
+      let data = await Footer.update(
+        { isDeletd: 1 },
+        { where: { id: id } }
+      );
+      return res.status(200).send({
+        success: true,
+        data: data,
+        message: "Data Updated SuccessFully",
+      });
+    
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      message: "Error in Getting Data",
+    });
+  }
 };
 
 module.exports = {
   addFooter,
   getFooter,
   editFooter,
-  deleteFooter,
+  updateFooterStatus,
+  deleteFooter
 };

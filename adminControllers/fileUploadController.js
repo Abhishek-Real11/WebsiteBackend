@@ -7,24 +7,20 @@ const uploadfile = async (req, res) => {
     const type = req.query.type;
     if (!req.file)
       return res.status(400).send({
-        success: false,
+        success: false, 
         data: "",
         message: "Please Select Image ",
       });
-
+console.log("!")
     if (!type)
       return res.status(400).send({ message: "Please send Type of Image." });
 
-    const status = req.query.status;
-    const isActive = req.query.isActive;
 
     let src = req.file.location;
     let data = await image.create({
       image: src,
       type: type,
-      status: status,
-      isActive: isActive,
-      subType:req.body.subType||null
+      subType:req.query.subType||null
     });
     if (data)
       return res.status(200).send({

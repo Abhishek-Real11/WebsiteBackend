@@ -1,39 +1,34 @@
-const FooterDisclaimer = require("../models/footerDisclaimerModel");
+const FindOutMore = require("../models/findOutMoreFooterModel");
 
-const createFooterDisclaimer = async (req, res) => {
+const createFindOutMore = async (req, res) => {
   try {
-    const { value } = req.body;
-
-    if (!value)
-      return res.status(200).send({
-        success: true,
-        data: "",
-        message: "Please Add Some Content",
-      });
+    
     let data;
 
-    data = await FooterDisclaimer.create({
-      disclaimer: value,
+    data = await FindOutMore.create({
+        title: req.body.heading,
+        path:req.body.path
+
     });
     return res.status(200).send({
       success: true,
       data: data,
-      message: "Disclaimer Added Successfully",
+      message: "Added Successfully",
     });
   } catch (error) {
     return res.status(400).send({
       success: false,
       data: "",
-      message: "Error in Adding Disclaimer",
+      message: "Error in Adding title",
     });
   }
 };
 
-const getFooterDisclaimer = async (req, res) => {
+const getFindOutMore = async (req, res) => {
   try {
     let data;
 
-    FooterDisclaimer.findAll({
+    FindOutMore.findAll({
       where: { isDeleted: 0 },
     })
       .then((data) => {
@@ -59,15 +54,15 @@ const getFooterDisclaimer = async (req, res) => {
   }
 };
 
-const updateFooterDisclaimer = async (req, res) => {
+const updateFindOutMoreStatus = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await FooterDisclaimer.findAll({ where: { id: id } });
+    let result = await FindOutMore.findAll({ where: { id: id } });
 
     if (isActive != result[0].dataValues.isActive) {
-      let data = await FooterDisclaimer.update(
+      let data = await FindOutMore.update(
         { isActive: isActive },
         { where: { id: id } }
       );
@@ -76,6 +71,7 @@ const updateFooterDisclaimer = async (req, res) => {
         data: data,
         message: " Status updated Successfully",
       });
+
     } else {
       return res.status(400).send({
         success: false,
@@ -92,14 +88,14 @@ const updateFooterDisclaimer = async (req, res) => {
   }
 };
 
-const deleteFooterDisclaimer = async (req, res) => {
+const deleteFindOutMore = async (req, res) => {
   try {
-    let result = await FooterDisclaimer.findAll({
+    let result = await FindOutMore.findAll({
       where: { id: req.query.id },
     });
 
     if (!result[0].dataValues.isDeleted) {
-      let data = await FooterDisclaimer.update(
+      let data = await FindOutMore.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
@@ -124,32 +120,10 @@ const deleteFooterDisclaimer = async (req, res) => {
   }
 };
 
-const editFooterDisclaimer = async (req, res) => {
-  try {
-    let value = req.body.value;
-    let id = req.query.id;
-    let data = await FooterDisclaimer.update(
-      { discliamer: value },
-      { where: { id: id } }
-    );
-    return res.status(200).send({
-      success: true,
-      data: data,
-      message: "Disclaimer Edited Successfully",
-    });
-  } catch (error) {
-    return res.status(400).send({
-      success: false,
-      data: "",
-      message: "Error",
-    });
-  }
-};
 
 module.exports = {
-  createFooterDisclaimer,
-  getFooterDisclaimer,
-  updateFooterDisclaimer,
-  editFooterDisclaimer,
-  deleteFooterDisclaimer,
+  createFindOutMore,
+  getFindOutMore,
+  updateFindOutMoreStatus,
+  deleteFindOutMore
 };

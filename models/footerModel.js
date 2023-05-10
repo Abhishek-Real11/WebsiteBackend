@@ -24,7 +24,7 @@ Footer.init(
     email: {
       type: DataTypes.TEXT,
     },
-    concatNo: {
+    contactNo: {
       type: DataTypes.TEXT,
     },
     social_media_name: {
@@ -52,6 +52,10 @@ Footer.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    isActive:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    }
   },
   {
     sequelize,

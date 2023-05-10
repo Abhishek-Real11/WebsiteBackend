@@ -14,11 +14,10 @@ FantasyCricketPoints.init(
     },
     type: {
       type: DataTypes.TEXT, //cricket
-      defaultValue: "Cricket",
+      defaultValue: "kabaddi",
     },
     gameType: {
       type: DataTypes.TEXT, //T20
-      defaultValue: false,
     },
     actionName: {
       type: DataTypes.TEXT, //Batting

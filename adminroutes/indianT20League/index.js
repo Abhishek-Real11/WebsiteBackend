@@ -49,7 +49,9 @@ const {
 const {
   addIndianT20League,
   getIndianT20League,
-  updateIndianT20LeagueStatus
+  updateIndianT20LeagueStatus,
+  editIndianT20League,
+  deleteIndianT20League
 } = require("../../adminControllers/indain-T20-LeagueController");
 
 const upload1 = require("../../config/multer");
@@ -95,5 +97,8 @@ router.delete("/deleteTestimonial", deleteTestimonial);
 router.post("/addIndianT20League", [upload1.array("image",2)], addIndianT20League);
 router.get("/getIndianT20League",getIndianT20League );
 router.post("/updateIndianT20LeagueStatus", updateIndianT20LeagueStatus);
+router.post("/editIndianT20League",[upload1.array("image",2)],editIndianT20League);
+router.post("/deleteIndianT20League",verify,deleteIndianT20League);
+//deleteIndianT20League
 
 module.exports = router;

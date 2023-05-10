@@ -19,7 +19,6 @@ DownloadBanner.init(
     },
     type: {
       type: DataTypes.STRING,
-      defaultValue:"Download"
     },
     isActive: {
       type: DataTypes.BOOLEAN,

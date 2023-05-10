@@ -14,7 +14,7 @@ const TermsAndCondition = require("./TermsAndCondition/index");
 const HowToPlay = require("./How-To-Play/index");
 const FantasyCricket = require("./Fantasy-Cricket/index");
 const PressRelease = require("./Press-Release/index");
-const FooterDisclaimer=require("./Footer/index");
+const Footer=require("./Footer/index");
 const CricketPoints=require("./fantasy-Points/index")
 
 router.use("/auth", userRoute);
@@ -32,7 +32,7 @@ router.use("/t&C", TermsAndCondition);
 router.use('/how-to-play',HowToPlay);
 router.use('/fantasy-cricket',FantasyCricket)
 router.use('/press-release',PressRelease);
-router.use("/footer",FooterDisclaimer);
+router.use("/footer",Footer);
 router.use('/cricketpoints',CricketPoints)
 
 module.exports = router;
