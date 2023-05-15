@@ -7,7 +7,6 @@ const createTrophy = async (req, res) => {
   try {
     const { title, verify } = JSON.parse(req.body.data);
    
-    // console.log(title,description,req.file.location,req.query.type,req.query.subType)
     let data = await Trophy.create({
       winTrophy: req.files[0].location,
       transfermoney:req.files[1].location,

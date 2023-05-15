@@ -2,26 +2,25 @@ const sequelize = require("../config/db.js");
 
 const { DataTypes, Model } = require("sequelize");
 
-class Image extends Model {}
+class StickyButton extends Model {}
 
-Image.init(
+StickyButton.init(
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     image: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
-    type: {
+    url: {
       type: DataTypes.STRING,
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "inactivate",
+      allowNull: false,
+      unique: true,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -31,17 +30,18 @@ Image.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    subType: {
+    type: {
       type: DataTypes.STRING,
+
     },
   },
   {
     sequelize,
-    modelName: "image",
+    modelName: "StickyButton",
     timestamps: true,
-    createdAt: true, // don't add createdAt attribute
-    updatedAt: false,
+    createdAt: true,
+    updatedAt: true,
   }
 );
 
-module.exports = Image;
+module.exports = StickyButton;

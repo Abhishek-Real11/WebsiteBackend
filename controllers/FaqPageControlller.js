@@ -31,7 +31,7 @@ const getfaqs = async (req, res) => {
     let data;
 
     FaqPage.findAll({
-      where: { isDeleted: 0, type: req.query.type },
+      where: { isDeleted: 0, type: req.query.type,isActive:1 },
       order: [["createdAt", "Asc"]],
     })
       .then((data) => {

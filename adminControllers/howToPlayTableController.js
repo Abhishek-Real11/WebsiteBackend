@@ -5,7 +5,6 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const createTable = async (req, res) => {
   try {
-    console.log(req.body.data)
     let data = await HowToPlayTable.create({
       playerType:req.body.data.playerType,
       min:req.body.data.Min,

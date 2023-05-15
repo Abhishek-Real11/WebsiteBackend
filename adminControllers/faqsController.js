@@ -33,7 +33,6 @@ const getfaqs = async (req, res) => {
     let data;
     const { page, size,type } = req.query;
     const { limit, offset } = getPagination(page, size);
-    console.log(type)
     Faqs.findAndCountAll({ where: { isDeleted: 0,type:type },order: [
       ['createdAt', 'Asc'],
   ],limit, offset })

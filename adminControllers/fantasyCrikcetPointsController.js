@@ -3,9 +3,7 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const createFantasyCricketPoints = async (req, res) => {
   try {
-    // const { description } = req.body;
-    console.log(req.body, req.type);
-
+  
     let data = await FantasyCricketPoints.create({
       gameType: req.query.gameType || null,
       actionName: req.query.action_name,

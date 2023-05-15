@@ -191,7 +191,6 @@ const editFooter = async (req, res) => {
 const updateFooterStatus = async (req, res) => {
   try {
     let id = req.query.id;
-    console.log(req.query.isActive,id)
       let data = await Footer.update(
         { isActive: req.query.isActive },
         { where: { id: id } }

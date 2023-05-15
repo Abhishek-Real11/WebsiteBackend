@@ -28,7 +28,7 @@ User.init(
     },
     roles: {
       type: DataTypes.STRING,
-      defaultValue: "user",
+      defaultValue: "admin",
     },
   },
   {

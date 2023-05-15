@@ -1,38 +1,38 @@
-const AboutUsBottomImage = require("../models/aboutUsBottomImageModel");
-const addImage = async (req, res) => {
-  try {
-    if (req.body.data) {
-      const { subType } = JSON.parse(req.body.data);
+const StickyButton = require("../models/stickyButtonMdoel");
+require("dotenv").config();
 
-      let data = await AboutUsBottomImage.create({
-        image: req.file.location,
-        type: req.query.type,
-        subType: subType,
-      });
-    }
-    let data = await AboutUsBottomImage.create({
+const createStickyButton = async (req, res) => {
+  try {
+    const { link } = JSON.parse(req.body.data);
+
+    let data = await StickyButton.create({
       image: req.file.location,
+      url: link,
       type: req.query.type,
     });
-
     return res.status(200).send({
       success: true,
       data: data,
-      message: "About Us Image Added SuccessFully",
+      message: "Stikcy Button Added Successfully",
     });
   } catch (error) {
     return res.status(400).send({
       success: false,
       data: "",
-      message: error,
+      message: "Error",
     });
   }
 };
 
-const getImage = async (req, res) => {
+const getStickyButton = async (req, res) => {
   try {
     let data;
-    data = await AboutUsBottomImage.findAll({ where: { isDeleted: 0 } });
+    data = await StickyButton.findAll({
+      where: {
+        isDeleted: 0,
+      },
+      order: [["createdAt", "Asc"]],
+    });
     return res.status(200).send({
       success: true,
       data: data,
@@ -47,15 +47,15 @@ const getImage = async (req, res) => {
   }
 };
 
-const updateImageStatus = async (req, res) => {
+const updateStikcyButton = async (req, res) => {
   try {
     let id = req.query.id;
     let isActive = req.query.isActive;
 
-    let result = await AboutUsBottomImage.findAll({ where: { id: id } });
+    let result = await StickyButton.findAll({ where: { id: id } });
 
     if (isActive != result[0].dataValues.isActive) {
-      let data = await AboutUsBottomImage.update(
+      let data = await StickyButton.update(
         { isActive: isActive },
         { where: { id: id } }
       );
@@ -81,14 +81,14 @@ const updateImageStatus = async (req, res) => {
   }
 };
 
-const deleteImage = async (req, res) => {
+const deleteStickyButton = async (req, res) => {
   try {
-    let result = await AboutUsBottomImage.findAll({
+    let result = await StickyButton.findAll({
       where: { id: req.query.id },
     });
 
     if (!result[0].dataValues.isDeleted) {
-      let data = await AboutUsBottomImage.update(
+      let data = await StickyButton.update(
         { isDeleted: true },
         { where: { id: req.query.id } }
       );
@@ -108,14 +108,37 @@ const deleteImage = async (req, res) => {
     return res.status(400).send({
       success: false,
       data: "",
-      message: "Deletion Failed",
+      message: error,
+    });
+  }
+};
+
+const editSquareBox = async (req, res) => {
+  try {
+    let description = req.body.description;
+    let title = req.body.title;
+
+    let data = await SquareBoxModel.update(
+      { description: description, title: title },
+      { where: { id: req.query.id } }
+    );
+    return res.status(200).send({
+      success: true,
+      data: data,
+      message: "Content change Successfully",
+    });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      data: "",
+      message: "Error",
     });
   }
 };
 
 module.exports = {
-  addImage,
-  getImage,
-  updateImageStatus,
-  deleteImage,
+  createStickyButton,
+  getStickyButton,
+  updateStikcyButton,
+  deleteStickyButton,
 };

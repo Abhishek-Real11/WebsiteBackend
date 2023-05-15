@@ -2,7 +2,6 @@ const path = require("path");
 const aws = require("aws-sdk");
 
 require("dotenv").config();
-console.log(process.env.AWS_S3_ACCESS_KEY_ID)
 aws.config.update({
   secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
   accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
@@ -23,11 +22,11 @@ const upload = multer({
     s3: s3,
     bucket: process.env.AWS_S3_BUCKET,
     metadata: function (req, file, cb) {
-      console.log(file)
+    
       cb(null, { fieldName: file.originalname });
     },
     key: function (req, file, cb) {
-      console.log(file.orginalname)
+     
       cb(null, file.originalname);
     },
     contentType: function (req, file, cb) {

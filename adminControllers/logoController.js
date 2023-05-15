@@ -15,7 +15,6 @@ const uploadLogo = async (req, res) => {
       data: data,
       message: "Logo Added Successfully",
     });
-    console.log("1");
   } catch (error) {
     return res.status(400).send({
       success: false,

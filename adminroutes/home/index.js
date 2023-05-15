@@ -64,6 +64,12 @@ const {
   deleteAppFeaturesImage,
 } = require("../../adminControllers/appFeaturesImageController");
 
+const {
+  createUpcomingMatches,
+  getUpcomingMatches,
+  updateUpcomingMatches,
+} = require("../../adminControllers/upcomingMatchesController");
+
 const upload1 = require("../../config/multer");
 
 router.post("/addLogo", [upload1.single("image")], uploadLogo);
@@ -119,5 +125,9 @@ router.post(
 router.get("/getAppFeaturesImage", verify, getAppFeaturesImage);
 router.post("/updateAppFeaturesImageStatus", updateAppFeaturesImageStatus);
 router.delete("/deleteAppFeaturesImage", deleteAppFeaturesImage);
+
+router.post("/createUpcomingMatches", verify, createUpcomingMatches);
+router.get("/getUpcomingMatches", verify, getUpcomingMatches);
+router.post("/updateUpcomingMatches", verify, updateUpcomingMatches);
 
 module.exports = router;

@@ -5,11 +5,8 @@ const { getPagination, getPagingData } = require("../config/paginate");
 
 const createPressRelease = async (req, res) => {
   try {
-    console.log("1")
-    const { title, description,url,value } = JSON.parse(req.body.data);
-    console.log("11")
-    console.log(req.body.data.value)
-    console.log("111")
+  
+    const { title, description,url,value } = JSON.parse(req.body.data); 
     let data = await PressRelease.create({
       image: req.file.location,
       title: title,

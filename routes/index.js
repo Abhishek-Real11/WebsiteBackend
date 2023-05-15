@@ -15,8 +15,9 @@ const TermsAndCondition = require("./TermsAndCondition/index");
 const HowToPlay = require("./How-To-Play/index");
 const FantasySports = require("./Fantasy-Sports/index");
 const PressRelease = require("./Press-Release/index");
-// router.use("/", fileupload);
 const Footer=require("./Footer/index");
+const Setting=require('./setting/index')
+const CricketPoints=require("./fantasy-Points/index");
 
 router.use("/", testimonial);
 router.use("/", content);
@@ -32,5 +33,8 @@ router.use("/how-to-play", HowToPlay);
 router.use("/fantasy-sports", FantasySports);
 router.use("/press-release", PressRelease);
 router.use("/footer",Footer);
-//indianT20League/
+router.use("/setting",Setting);
+router.use("/setting",Setting);
+router.use('/fantasyPoints',CricketPoints)
+//fantasyPoints/getFantasyCricketPoints?type=
 module.exports = router;

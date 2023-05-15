@@ -11,7 +11,6 @@ const uploadfile = async (req, res) => {
         data: "",
         message: "Please Select Image ",
       });
-console.log("!")
     if (!type)
       return res.status(400).send({ message: "Please send Type of Image." });
 

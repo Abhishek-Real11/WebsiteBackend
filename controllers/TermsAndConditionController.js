@@ -9,7 +9,7 @@ const getTermsAndCondition = async (req, res) => {
     let data;
     
 
-    TermsAndCondition.findAll({ where: { isDeleted: 0,isActive:1 },})
+    TermsAndCondition.findAll({ where: { isDeleted: 0,isActive:1 }, order: [["createdAt", "Asc"]],})
       .then((data) => {
         // const response = getPagingData(data, page, limit);
         return res.status(200).send({
