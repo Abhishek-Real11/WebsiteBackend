@@ -2,6 +2,7 @@ var jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
 const otpGenerator = require("otp-generator");
 const User = require("../models/userModel.js");
+const SubAdmin = require("../models/subAdminModel");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const response = require("../config/response");
@@ -47,7 +48,11 @@ const login = async (req, res) => {
       return res.status(404).send("Insufficient Data");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (!data)
+    const data1=await SubAdmin.findOne({where: { email: req.body.email } });
+
+    if(data)
+    {
+      if (!data)
       return res.status(401).send({
         success: false,
         data: "",
@@ -79,6 +84,45 @@ const login = async (req, res) => {
       return res
         .status(401)
         .send({ success: false, message: "Invalid Credentials" });
+    }
+  }
+  if(data1){
+      if (!data1)
+      return res.status(401).send({
+        success: false,
+        data: "",
+        message: "Invalid Credentials",
+      });
+    let result = await bcrypt.compare(
+      req.body.password,
+      data1.dataValues.password
+    );
+      let accessModule=JSON.parse(data1.dataValues.accessModule)
+    if (result) {
+      const payload = {
+        email: data1.dataValues.email,
+        username: data1.dataValues.username,
+        roles: data1.dataValues.roles,
+        accessModule:accessModule
+
+      };
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+        expiresIn: "30m",
+      });
+
+      return res.status(200).send({
+        success: true,
+        token: token,
+        user: payload,
+        accessModule:accessModule,
+        message: "User login successfully",
+      });
+    } else {
+      return res
+        .status(401)
+        .send({ success: false, message: "Invalid Credentials" });
+    }
     }
   } catch (error) {
     return res.status(400).send(error);

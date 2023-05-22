@@ -17,6 +17,7 @@ const PressRelease = require("./Press-Release/index");
 const Footer = require("./Footer/index");
 const CricketPoints = require("./fantasy-Points/index");
 const Setting = require("./setting/index");
+const SubAdmin = require("./SubAdmin/index");
 
 router.use("/auth", userRoute);
 router.use("/", fileupload);
@@ -36,6 +37,7 @@ router.use("/press-release", PressRelease);
 router.use("/footer", Footer);
 router.use("/cricketpoints", CricketPoints);
 router.use("/setting", Setting);
+router.use("/subAdmin", SubAdmin);
 
 
 module.exports = router;
