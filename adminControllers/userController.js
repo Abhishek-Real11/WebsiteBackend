@@ -48,81 +48,94 @@ const login = async (req, res) => {
       return res.status(404).send("Insufficient Data");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    const data1=await SubAdmin.findOne({where: { email: req.body.email } });
+    const data1 = await SubAdmin.findOne({ where: { email: req.body.email } });
 
-    if(data)
-    {
+    if (data) {
       if (!data)
-      return res.status(401).send({
-        success: false,
-        data: "",
-        message: "Invalid Credentials",
-      });
-    let result = await bcrypt.compare(
-      req.body.password,
-      data.dataValues.password
-    );
+        return res.status(401).send({
+          success: false,
+          data: "",
+          message: "Invalid Credentials",
+        });
+      let result = await bcrypt.compare(
+        req.body.password,
+        data.dataValues.password
+      );
 
-    if (result) {
-      const payload = {
-        email: data.dataValues.email,
-        username: data.dataValues.username,
-        roles: data.dataValues.roles,
-      };
+      if (result) {
+        const payload = {
+          email: data.dataValues.email,
+          username: data.dataValues.username,
+          roles: data.dataValues.roles,
+        };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-        expiresIn: "30m",
-      });
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+          expiresIn: "30m",
+        });
 
-      return res.status(200).send({
-        success: true,
-        token: token,
-        user: payload,
-        message: "User login successfully",
-      });
-    } else {
-      return res
-        .status(401)
-        .send({ success: false, message: "Invalid Credentials" });
+        return res.status(200).send({
+          success: true,
+          token: token,
+          user: payload,
+          message: "User login successfully",
+        });
+      } else {
+        return res
+          .status(401)
+          .send({ success: false, message: "Invalid Credentials" });
+      }
     }
-  }
-  if(data1){
+    if (data1) {
       if (!data1)
-      return res.status(401).send({
-        success: false,
-        data: "",
-        message: "Invalid Credentials",
-      });
-    let result = await bcrypt.compare(
-      req.body.password,
-      data1.dataValues.password
-    );
-      let accessModule=JSON.parse(data1.dataValues.accessModule)
-    if (result) {
-      const payload = {
-        email: data1.dataValues.email,
-        username: data1.dataValues.username,
-        roles: data1.dataValues.roles,
-        accessModule:accessModule
+        return res.status(401).send({
+          success: false,
+          data: "",
+          message: "Invalid Credentials",
+        });
+      console.log(data1.dataValues.isDeleted == 0, data1.dataValues.isActive);
+      if (data1.dataValues.isDeleted == 1 || data1.dataValues.isActive == 0) {
+        return res.status(401).send({
+          success: false,
+          data: "",
+          message: "You have Not Acess to login",
+        });
+      }
+      let result = await bcrypt.compare(
+        req.body.password,
+        data1.dataValues.password
+      );
+      let accessModule = JSON.parse(data1.dataValues.accessModule);
+      let accessRoutes = JSON.parse(data1.dataValues.accessRoutes);
+      if (result) {
+        const payload = {
+          email: data1.dataValues.email,
+          username: data1.dataValues.username,
+          roles: data1.dataValues.roles,
+          accessModule: accessModule,
+          accessRoutes: accessRoutes,
+        };
 
-      };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+          expiresIn: "30m",
+        });
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-        expiresIn: "30m",
-      });
-
-      return res.status(200).send({
-        success: true,
-        token: token,
-        user: payload,
-        accessModule:accessModule,
-        message: "User login successfully",
-      });
-    } else {
-      return res
-        .status(401)
-        .send({ success: false, message: "Invalid Credentials" });
+        return res.status(200).send({
+          success: true,
+          token: token,
+          user: payload,
+          accessModule: accessModule,
+          message: "User login successfully",
+        });
+      } else {
+        return res
+          .status(401)
+          .send({ success: false, message: "Invalid Credentials" });
+      }
     }
+    if (!data && !data1) {
+      return res
+        .status(400)
+        .send({ success: false, message: "User Not Found" });
     }
   } catch (error) {
     return res.status(400).send(error);
@@ -136,11 +149,12 @@ const getOtp = async (req, res) => {
       return res.status(400).send("Please Enter Email");
     }
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (data === null) return res.status(401).send({
-      success: false,
-      data: "",
-      message: "User Doesn't Exists",
-    });
+    if (data === null)
+      return res.status(401).send({
+        success: false,
+        data: "",
+        message: "User Doesn't Exists",
+      });
     let otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       specialChars: false,
@@ -184,11 +198,12 @@ const resetPassword = async (req, res) => {
   try {
     const { email, otp, password } = req.body;
     const data = await User.findOne({ where: { email: req.body.email } });
-    if (!data) return res.status(401).send({
-      success: false,
-      data: "",
-      message: "User Doesn't Exists",
-    });
+    if (!data)
+      return res.status(401).send({
+        success: false,
+        data: "",
+        message: "User Doesn't Exists",
+      });
 
     if (otp === data.dataValues.otp) {
       let reg_result = regex.test(password);

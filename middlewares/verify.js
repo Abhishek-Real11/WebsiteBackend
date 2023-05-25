@@ -39,9 +39,6 @@ module.exports = async (req, res, next) => {
       } else {
         return res.status(400).send("Invalid Token");
       }
-      // console.log("result",result)
-      // req.payload = result;
-      // next();
     });
   } catch (error) {
     res.status(400).send(error);

@@ -24,20 +24,41 @@ SubAdmin.init(
         password: {
           type: DataTypes.STRING,
         },
+        isActive: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
+        isDeleted: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
         accessModule: {
           type: DataTypes.TEXT,
           get: function () {
-            return JSON.parse(this.getDataValue("accessModule"));
+            if(this.getDataValue("accessModule")!== undefined){
+              return JSON.parse(this.getDataValue("accessModule"));
+            }
           },
           set: function (val) {
-            console.log("val",JSON.stringify(val))
             return this.setDataValue("accessModule", JSON.stringify(val));
+          },
+        },
+        accessRoutes: {
+          type: DataTypes.TEXT,
+          get: function () {
+            if(this.getDataValue("accessRoutes")!== undefined){
+            return JSON.parse(this.getDataValue("accessRoutes"));
+            }
+          },
+          set: function (val) {
+            return this.setDataValue("accessRoutes", JSON.stringify(val));
           },
         },
         roles: {
           type: DataTypes.STRING,
           defaultValue: "subAdmin",
         },
+      
       },
   {
     sequelize,
